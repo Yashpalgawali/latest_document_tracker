@@ -5,7 +5,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>Add Vendor</title>
-	
+
+	<script>
+		$(document).ready(function(){
+				$("#cnfpassword").focusout(function(e){
+					if($("#cnfpassword").val()!=$("#password").val())
+					{
+						e.preventDefault();
+						alert('Passwords do not match');
+						$("#password").focus();
+					}
+				});
+
+				$("#submit").click(function(e){
+						
+					if($("#cnfpassword").val()!=$("#password").val())
+					{
+						e.preventDefault();
+						$("#password").focus();
+						alert('Passwords do not match');
+					}
+				})
+			});
+	</script>
 </head>
 
 <body>
@@ -25,49 +47,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		<div class="card">
-			<div class="card-header">
-				<h4>Add Vendor</h4>
+			<div class="card-header"> <h4>Add Vendor</h4> </div>
+			<div class="card-body">
+			<form action="<?php echo base_url();?>Vendor/savevendor" method="POST" >
+				
+			<div class="form-group">
+				<label for="vendor_name">Vendor Name</label>
+					<input type="text" name="vendor_name" id="vendor_name" class="form-control" placeholder="Enter Name of Vendor">
 			</div>
-			<div class="card-body">			
-				<form action="<?php echo base_url();?>Vendor/savevendor" method="POST" >
-				
-				<div class="form-group">
-					<label for="doc_name">Vendor Name<span style="color:red;">*<span> </label>
-						<input type="text" name="doc_name" id="doc_name" class="form-control mb-3" placeholder="Enter the Vendor Name" required/>
-				</div>
-				
-				<div class="form-group">
-					<label for="email">Email<span style="color:red;">*<span> </label>
-						<input type="email" name="email" id="email" class="form-control mb-3" placeholder="Enter Vendor E-mail" required/>
-				</div>
-				
-				<div class="form-group">
-					<label for="issued_date">Vendor Issued Date<span style="color:red;">*<span> </label>
-						<div class="input-group">
-							<input class="form-control border-right-0" id="issued_date" name="issued_date" required>
-								<span class="input-group-append bg-white border-left-0">
-									<span class="input-group-text bg-transparent">
-											<i class="fa fa-calendar fa-lg"></i>
-									</span>
-								</span>
-						</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="last_renewed_date">Last Renewed Date<span style="color:red;">*<span> </label>
-						<div class="input-group">
-							<input class="form-control border-right-0" id="last_renewed_date" name="last_renewed_date" required>
-								<span class="input-group-append bg-white border-left-0">
-									<span class="input-group-text bg-transparent">
-											<i class="fa fa-calendar fa-lg"></i>
-									</span>
-								</span>
-						</div>
-				</div>
-				 
-				<div class="form-group">
-					<label for="vendor_type"></label>
-						<select name="vendor_type" id="vendor_type" class="form-control">
+			<div class="form-group">
+				<label for="vendor_email">Email<span style="color:red;">*<span> </label>
+					<input type="email" name="vendor_email" id="vendor_email" class="form-control mb-3" placeholder="Enter Vendor E-mail" required/>
+			</div>
+			<div class="form-group">
+					<label for="vendor_username">User Name</label>
+						<input type="text" name="vendor_username" id="vendor_username" class="form-control mb-3" placeholder="Enter username " />
+			</div>
+	
+			<div class="form-group">
+				<label for="password">Password<span style="color:red;">*<span> </label>
+					<input type="password" name="password" id="password" class="form-control" required placeholder="Enter Password">
+			</div>
+
+			<div class="form-group">
+				<label for="cnfpassword">Confirm Password<span style="color:red;">*<span> </label>
+					<input type="password" name="cnfpassword" id="cnfpassword" required class="form-control" placeholder="Confirm Password">
+			</div>
+			 
+			<div class="form-group">
+					<label for="vendor_type_id">Select Vendor Type</label>
+						<select name="vendor_type_id" id="vendor_type_id" class="form-control">
 							<option selected disabled>Please Select Vendor Type</option>
 						<?php foreach($vendortype as $vtype)
 						{
@@ -75,18 +84,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 						?>
 						</select>
-				</div>
+			</div>
 			
-				<input type="submit" class="btn btn-primary mb-3" value="Add Vendor" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
+			<input type="submit" class="btn btn-primary mb-3" id="submit" value="Add Vendor" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				
 				</form>
 			</div>
 	  </div>
 	</div>
-		<link rel="stylesheet" href="<?php echo base_url();?>/assets/css/home.css">
-		<!-- Include Moment.js CDN -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"> </script>
-	    <!-- Include Bootstrap DateTimePicker CDN -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"  rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+	
+	<link rel="stylesheet" href="<?php echo base_url();?>/assets/css/home.css">
+		
 </body>

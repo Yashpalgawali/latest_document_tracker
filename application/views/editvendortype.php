@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>Edit Vendor Type</title>
-	
 </head>
 
 <body>
@@ -26,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		<div class="card">
 			<div class="card-header">
-				<h4>Add Vendor Type</h4>
+				<h4>Edit Vendor Type</h4>
 			</div>
 			<div class="card-body">			
 				<form action="<?php echo base_url();?>Vendor/updatevendortype" method="POST" >
@@ -36,7 +35,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<input type="text" name="vendor_type" id="vendor_type" class="form-control mb-3" value="<?php echo $vendortype['vendor_type'];?>" placeholder="Enter the Vendor Type" required/>
 				</div>
 				
-				<input type="submit" class="btn btn-primary mb-3" value="Add Vendor" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
+				<input type="submit" class="btn btn-primary mb-3" value="Update Vendor" />&nbsp;&nbsp;
+				<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				
 				</form>
 			</div>

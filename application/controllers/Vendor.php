@@ -8,7 +8,7 @@ class Vendor extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->library('encryption');
-		$this->load->model(array('vendor_type_model'));
+		$this->load->model(array('vendor_type_model','vendor_model','login_model'));
 	}	
 
 	public function index()
@@ -20,21 +20,61 @@ class Vendor extends CI_Controller {
 	}
 	
 	public function savevendor()
-	{
+	{	
+		$enc_pass = $this->encryption->encrypt($_POST['password']);
+
 		$data = array( 
-				'vendor_type' => $_POST['vendor_type']
+				'vendor_type_id' => $_POST['vendor_type_id'],
+				'vendor_name' 	 => $_POST['vendor_name'],
+				'vendor_email'	 => $_POST['vendor_email'],
+				'enabled'		 => 1
 		);
-		echo "inside savevendor()";
-		die();
+
+		 $res = $this->vendor_model->savevendor($data);
+		 $lid = $this->vendor_model->getLastInsertedId();
+ 
+		 if($res==1)
+		 {
+			$lid = $this->vendor_model->getLastInsertedId();
+			$newdata = array(
+				'username'  => $_POST['vendor_name'],
+				'password'  => $enc_pass,
+				'vendor_id' => $lid,
+				'email'	    => $_POST['vendor_email'],
+				'user_type' => $_POST['vendor_type_id']
+
+			);
+			$result = $this->login_model->saveuser($newdata);
+			
+			$this->session->set_flashdata('response','Vendor '.$_POST['vendor_name'].' is registered successfully ');
+			redirect('Vendor/viewvendor');
+		 }
+		 else {
+			$this->session->set_flashdata('reserr','Vendor '.$_POST['vendor_name'].' is not registered');
+			redirect('Vendor/viewvendor');
+		 }
+		 
+		
 	}
 
-	public function viewvendor(){
-		echo "inside viewvendor()";
-		die();
+	public function viewvendor() {
+		$data['vendors']=$this->vendor_model->getallvendors();
+		$this->load->view('fragments/header');
+		$this->load->view('viewvendors',$data);
+		$this->load->view('fragments/footer');
 	}
 
-	public function addvendortype(){
+	public function editvendorbyid($id) {
+		$data['vendor'] = $this->vendor_model->getvendorbyid($id);
+		$data['vendors']=$this->vendor_model->getallvendors();
+		$data['vendortype'] = $this->vendor_type_model->getallvendortype();
 
+		$this->load->view('fragments/header');
+		$this->load->view('editvendor',$data);
+		$this->load->view('fragments/footer');
+	}
+
+	public function addvendortype() {
 		$this->load->view('fragments/header');
 		$this->load->view('addvendortype');
 		$this->load->view('fragments/footer');
@@ -68,12 +108,11 @@ class Vendor extends CI_Controller {
 	{
 		$data['vendortype'] = $this->vendor_type_model->getVendorTypeById($id);
 
-		 print_r($data['vendortype']['vendor_type_id']);
-		 if($data['vendortype']['vendor_type_id']=='')
-		 {
+		if($data['vendortype']['vendor_type_id']=='')
+		{
 			$this->session->set_flashdata('reserr','No Vendor Type found for given ID');
 			redirect('Vendor/viewvendortype');
-		 }
+		}
 		else
 		{
 			$this->load->view('fragments/header');

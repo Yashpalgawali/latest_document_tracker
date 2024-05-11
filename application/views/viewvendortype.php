@@ -5,6 +5,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>View Vendor Type</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"/>
+	
+		<!-- DataTable -->
+		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
+		<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
+		
+	<script>
+		$(document).ready(function() {
+			$('#vendortable').DataTable();
+		});
+	</script>
+
 </head>
 
 <body>
@@ -47,8 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php 
 					}
 				?>
-				<table class="table table-hover table-striped">
-					<thead>
+<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" width="100%" id="vendortable">					<thead>
 						<tr>
 							<th>Sr No.</th>
 							<th>Vendor Type</th>

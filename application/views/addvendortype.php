@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">
-							View Vendor Types
+							Add Vendor Types
 						</li>
 					</ol>
 				</div>

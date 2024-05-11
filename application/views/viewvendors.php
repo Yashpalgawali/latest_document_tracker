@@ -8,7 +8,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo base_url();?>/assets/css/home.css">
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" ></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"/>
+	
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"/>
 	
 		<!-- DataTable -->
 		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -44,11 +45,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="container">
 		<?php 
 			if($this->session->flashdata('response'))
-			{?> <div class="alert alert-success">	<?php echo $this->session->flashdata('response');?></div>
+			{?> <div class="alert alert-success"><h6><?php echo $this->session->flashdata('response');?></h6></div>
 		<?php
 			}
 			if($this->session->flashdata('reserr'))
-			{?> <div class="alert alert-danger">	<?php echo $this->session->flashdata('reserr');?></div>
+			{?> <div class="alert alert-danger"><h6><?php echo $this->session->flashdata('reserr');?></h6></div>
 			<?php	
 			}	
 			?>
@@ -74,67 +75,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<thead>
 					<tr>
 						<th>Sr No.</th>
-						<th>Document </th>
-						<th>Document<br> Issued Date</th>
-						<th>Last Renewed <br>Date</th>
-						<th>Next Renewal <br>Date</th>
-						<th>Renewal <br>Period<sub>(in years)</sub></th>
+						<th>Name </th>
 						<th>Email</th>
+						
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 						<?php
 							$cnt=1;
-							foreach($docs as $doc)
+							foreach($vendors as $vendor)
 							{
 								?>
 								<tr>
 									<td> <?php echo $cnt++; ?> </td>
-									<td> <?php echo $doc['doc_name'];?> </td>
-								
-									<td> <?php echo $doc['doc_issue_date'];?> </td>
-									<td> <?php echo $doc['doc_last_renewed_date'];?></td>
-									<?php 
-											$date = strtotime($doc['doc_last_renewed_date']);
-											$m = date("m",$date);
-											$y = date("Y",$date);
-											$d = date("d",$date);
-											
-											//$mnths = is_float($doc['license_duration']);
-
-											$next_year = ($y+$doc['license_duration'])."-".$m."-".$d;
-									?>
+									<td> <?php echo $vendor['vendor_name'];?> </td>
+									<td> <?php echo $vendor['vendor_email'];?> </td>
 									
-									<?php 
-												$today  = date('Y-m-d');
-												// creates DateTime objects
-												$lrenew = date_create($next_year);
-												$today  = date_create(date('Y-m-d'));
-												
-												$diff = date_diff($today,$lrenew);
-												$days = $diff->format('%R%a');
-												
-												if($days<=(30) && $days>=0 )
-												{
-													?><td  style="color:red; "> <?php  echo $next_year."<sub> Due for Renewal</sub>";?></td>
-												<?php
-												}
-												elseif($days<=(30) && $days<=(-1) )
-												{
-													?><td  style="color:red;"> <?php  echo $next_year."<sub> Expired</sub>";?></td>
-												<?php
-												}
-												else
-												{
-													?><td style="color:black;"> <?php echo $next_year;?></td>
-												<?php
-												}
-										
-									?>
-									<td><?php echo $doc['license_duration'];?></td>	
-									<td> <?php echo $doc['email'];?> </td>									
-									<td> <a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['doc_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> </td>
+									<td> <a href="<?php echo base_url('Vendor/editvendorbyid/'.$vendor['vendor_id']);?>">Edit</a></td>
 								</tr>
 							<?php
 							}
