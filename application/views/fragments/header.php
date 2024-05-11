@@ -47,6 +47,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <li><a class="nav-link" href="<?php echo base_url();?>Vendor/viewvendortype">View Vendor Types</a></li>
           </ul>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Welcome 
+            <?php echo $this->session->userdata('vendor_name');?>
+          </a>
+          <ul class="dropdown-menu">
+            <li></li>
+            <li><a class="nav-link" href="<?php echo base_url();?>Login/logout">Logout</a></li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </div>

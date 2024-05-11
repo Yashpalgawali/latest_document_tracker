@@ -11,14 +11,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="container">
 
-	<h3 class="form-control">Admin Dashboard</h3>
+	<h3 class="form-control">Quality Dashboard</h3>
+		
+	<a href="<?php echo base_url();?>Vendor">Add Document</a>
+	<a href="<?php echo base_url();?>Vendor/addvendortype">View Document</a>
 	
-	
-	<a href="<?php echo base_url();?>Vendor">Add Vendor</a>
-	<a href="<?php echo base_url();?>Vendor/addvendortype">Add Vendor Type</a>
-	<a href="<?php echo base_url();?>Vendor/viewvendortype">Add Vendor Type</a>
-
 </div>
 
 </div>
-</html>
+<link rel="stylesheet" href="<?php echo base_url();?>/assets/css/home.css">

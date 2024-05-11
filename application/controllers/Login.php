@@ -14,7 +14,6 @@ class Login extends CI_Controller {
 	
 	public function index()
 	{
-		print_r($this->session->userdata('vendor_name'));
 		$data['vtype'] = $this->vendor_type_model->getallvendortype();
 
 		$this->load->view('fragments/header');
@@ -29,10 +28,22 @@ class Login extends CI_Controller {
 		if(!empty($res)){
 		if(strcmp($decrypt_pass,$res['password']))
 		{ 
+			$this->session->set_userdata('vendor_id',$res['vendor_id']);
 			$this->session->set_userdata('vendor_name',$res['vendor_name']);
 			$this->session->set_userdata('enabled',$res['enabled']);
-			$this->session->set_userdata('vendor_type',$res['enabled']);
-			redirect('Login');
+			$this->session->set_userdata('vendor_type',$res['user_type']);
+			if($res['user_type']==1)
+			{
+				redirect('Home');
+			}
+			if($res['user_type']==2)
+			{
+				redirect('Quality');
+			}
+			if($res['user_type']==3)
+			{
+				redirect('Social');
+			}
 		}
 		else {
 			$this->session->set_flashdata('reserr','Password not matched');
@@ -43,5 +54,14 @@ class Login extends CI_Controller {
 			$this->session->set_flashdata('reserr','No Record found');
 			redirect('Login');
 	   }
+	}
+
+	public function logout()
+	{
+		$this->session->unset_userdata('vendor_name');
+		$this->session->unset_userdata('enabled');
+		$this->session->unset_userdata('vendor_type');
+		$this->session->unset_userdata('vendor_id');
+		redirect('Login');
 	}
 }

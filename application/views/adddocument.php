@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>Add Document</title>
-	
 		<script>
 			$(document).ready(function(){
 				$('#issued_date').datetimepicker({ 
@@ -22,8 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												close	: 'fa fa-times'
 											},
 								});
-					$('#last_renewed_date').datetimepicker({ 
-							
+					$('#last_renewed_date').datetimepicker({
 							format	:	'YYYY-MM-DD',
 										icons: {
 												time	: 'fa fa-clock-o',
@@ -39,7 +37,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					});
 				})
 		</script>
-		
 		<style>
 .tooltip {
   position: relative;
