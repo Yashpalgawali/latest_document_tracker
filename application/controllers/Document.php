@@ -14,9 +14,17 @@ class Document extends CI_Controller {
 	
 	public function index()
 	{
-		$this->load->view('fragments/header');
-		$this->load->view('adddocument');
-		$this->load->view('fragments/footer');
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$this->load->view('fragments/header');
+			$this->load->view('adddocument');
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->load->view('fragments/vendor_header');
+			$this->load->view('adddocument');
+			$this->load->view('fragments/footer');
+		}
 	}
 	
 	public function savedocument()

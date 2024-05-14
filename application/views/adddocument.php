@@ -96,20 +96,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		<div class="card">
-			<div class="card-header">
-				<h4>Add Document</h4>
-			</div>
+			<div class="card-header"> <h4>Add Document</h4> </div>
 			<div class="card-body">			
 				<form action="<?php echo base_url();?>document/savedocument" method="POST" >
 				
 				<div class="form-group">
 					<label for="doc_name">Document Name<span style="color:red;">*<span> </label>
 						<input type="text" name="doc_name" id="doc_name" class="form-control mb-3" placeholder="Enter the document Name" required/>
-				</div>
-				
-				<div class="form-group">
-					<label for="email">Email<span style="color:red;">*<span> </label>
-						<input type="email" name="email" id="email" class="form-control mb-3" placeholder="Enter Your E-mail" required/>
 				</div>
 				
 				<div class="form-group">

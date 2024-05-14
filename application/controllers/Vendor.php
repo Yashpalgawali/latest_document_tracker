@@ -31,8 +31,7 @@ class Vendor extends CI_Controller {
 		);
 
 		 $res = $this->vendor_model->savevendor($data);
-		 $lid = $this->vendor_model->getLastInsertedId();
- 
+		 
 		 if($res==1)
 		 {
 			$lid = $this->vendor_model->getLastInsertedId();
@@ -40,9 +39,7 @@ class Vendor extends CI_Controller {
 				'username'  => $_POST['vendor_name'],
 				'password'  => $enc_pass,
 				'vendor_id' => $lid,
-				'email'	    => $_POST['vendor_email'],
-				'user_type' => $_POST['vendor_type_id']
-
+				'email'	    => $_POST['vendor_email']
 			);
 			$result = $this->login_model->saveuser($newdata);
 			

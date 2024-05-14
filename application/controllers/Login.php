@@ -11,7 +11,6 @@ class Login extends CI_Controller {
 		$this->load->model(array('vendor_type_model','login_model'));
 	}	
 	
-	
 	public function index()
 	{
 		$data['vtype'] = $this->vendor_type_model->getallvendortype();
@@ -22,26 +21,28 @@ class Login extends CI_Controller {
 	}
 	
 	public function login()
-	{
+	{ 
 		$res = $this->login_model->validateUser($_POST['email'],$_POST['user_type']);
+		
 		$decrypt_pass = $this->encryption->decrypt($res['password']);
+
 		if(!empty($res)){
-		if(strcmp($decrypt_pass,$res['password']))
-		{ 
+		if(strcmp($decrypt_pass,$_POST['password'])==0) {
+	
 			$this->session->set_userdata('vendor_id',$res['vendor_id']);
 			$this->session->set_userdata('vendor_name',$res['vendor_name']);
 			$this->session->set_userdata('enabled',$res['enabled']);
-			$this->session->set_userdata('vendor_type',$res['user_type']);
-			if($res['user_type']==1)
-			{
+			$this->session->set_userdata('vendor_type',$res['vendor_type']);
+			$this->session->set_userdata('vendor_type_id',$res['vendor_type_id']);
+			$this->session->set_userdata('email',$res['email']);
+
+			if($res['vendor_type_id']==1) {
 				redirect('Home');
 			}
-			if($res['user_type']==2)
-			{
+			if($res['vendor_type_id']==2) {
 				redirect('Quality');
 			}
-			if($res['user_type']==3)
-			{
+			if($res['vendor_type_id']==3) {
 				redirect('Social');
 			}
 		}
@@ -60,8 +61,10 @@ class Login extends CI_Controller {
 	{
 		$this->session->unset_userdata('vendor_name');
 		$this->session->unset_userdata('enabled');
+		$this->session->unset_userdata('vendor_type_id');
 		$this->session->unset_userdata('vendor_type');
 		$this->session->unset_userdata('vendor_id');
+		$this->session->unset_userdata('email');
 		redirect('Login');
 	}
 }
