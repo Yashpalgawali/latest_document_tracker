@@ -10,7 +10,7 @@ class Document extends CI_Controller {
 		$this->load->library('encryption');
 		$this->load->model(array('document_model','email_model','activity_model'));
 		$this->load->config('email_config');
-	}	
+	}
 	
 	public function index()
 	{
@@ -38,12 +38,10 @@ class Document extends CI_Controller {
 					);
 		$res = $this->document_model->savedocument($data);		
 		if($res==1){
-			
 				$activity = array(
 									"activity"		=>	$_POST['doc_name']." is added successfully",
 									"activity_date"	=>	date('d-m-Y H:i:s')
 								);
-								
 				$this->activity_model->saveactivity($activity);
 			
 				$this->session->set_flashdata('response','Document is Added successfully');
@@ -63,38 +61,36 @@ class Document extends CI_Controller {
 		$this->load->view('fragments/footer');
 	}
 	
-	public function editdocumentbyid($did)
-	{
+	public function editdocumentbyid($did) {
 		$data['doc'] = $this->document_model->getdocumentbyid($did);	
 		
-		if($data['doc']!=null)
-		{	
+		if($data['doc']!=null) {	
 			$this->load->view('fragments/header');
 			$this->load->view('editdocument',$data);
 			$this->load->view('fragments/footer');
 		}
-		else{
-			$this->session->set_flashdata('reserr','No Dcoument found for given ID');
+		else {
+			$this->session->set_flashdata('reserr','No Document found for given ID');
 			redirect('document/viewdocuments');
 		}
 	}
 	
 	public function updatedocument()
 	{
-		$did   		= $_POST['doc_id'];
-		$dname 		= $_POST['doc_name'];
+		$did = $_POST['doc_id'];
+		$dname = $_POST['doc_name'];
 		$issue_date = $_POST['issued_date'];
 		$lrenewdate = $_POST['last_renewed_date'];
-		$duration   = $_POST['license_duration'];
-		$email		= $_POST['email'];
+		$duration = $_POST['license_duration'];
+		$email	= $_POST['email'];
 		
 		$data = array(
-						'doc_id'				=> 	$did,
-						'doc_name'				=> 	$dname,
-						'email'					=>	$email,
-						'doc_issue_date' 		=>	$issue_date,
+						'doc_id' => $did,
+						'doc_name'	=> 	$dname,
+						'email'	 =>	$email,
+						'doc_issue_date' =>	$issue_date,
 						'doc_last_renewed_date' => 	$lrenewdate,
-						'license_duration'		=> 	$duration
+						'license_duration'  => 	$duration
 					);
 		$res = $this->document_model->updatedocument($data,$did);
 		
@@ -103,7 +99,6 @@ class Document extends CI_Controller {
 			$activity = array(
 								'activity'		=>	$dname.' updated successfully',
 								'activity_date' =>	date('d-m-Y H:i:s')
-				
 			);
 			$this->activity_model->saveactivity($activity);
 			
@@ -137,8 +132,7 @@ class Document extends CI_Controller {
 			
 			$days = $diff->format('%R%a');
 			
-			if($days<=30 && $days>=0)
-			{
+			if($days<=30 && $days>=0) {
 				$msg = $docs['doc_name']." will expire on ".$next_year;
 				$this->email_model->send_mail($docs['email'],$msg);
 			//	echo "<br>".$docs['doc_name']." will expire on ".$next_year;

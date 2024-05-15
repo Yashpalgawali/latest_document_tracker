@@ -13,10 +13,18 @@ class Vendor extends CI_Controller {
 
 	public function index()
 	{
-		$data['vendortype'] = $this->vendor_type_model->getallvendortype();
-		$this->load->view('fragments/header');
-		$this->load->view('addvendor',$data);
-		$this->load->view('fragments/footer');
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$data['vendortype'] = $this->vendor_type_model->getallvendortype();
+			$this->load->view('fragments/header');
+			$this->load->view('addvendor',$data);
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','You are not Authorized Please Login to continue');
+			redirect('Login');
+		}
+
 	}
 	
 	public function savevendor()
@@ -55,26 +63,47 @@ class Vendor extends CI_Controller {
 	}
 
 	public function viewvendor() {
-		$data['vendors']=$this->vendor_model->getallvendors();
-		$this->load->view('fragments/header');
-		$this->load->view('viewvendors',$data);
-		$this->load->view('fragments/footer');
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$data['vendors']=$this->vendor_model->getallvendors();
+			$this->load->view('fragments/header');
+			$this->load->view('viewvendors',$data);
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','You are not Authorized Please Login to continue');
+			redirect('Login');
+		}
 	}
 
 	public function editvendorbyid($id) {
-		$data['vendor'] = $this->vendor_model->getvendorbyid($id);
-		$data['vendors']=$this->vendor_model->getallvendors();
-		$data['vendortype'] = $this->vendor_type_model->getallvendortype();
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$data['vendor'] = $this->vendor_model->getvendorbyid($id);
+			$data['vendors']=$this->vendor_model->getallvendors();
+			$data['vendortype'] = $this->vendor_type_model->getallvendortype();
 
-		$this->load->view('fragments/header');
-		$this->load->view('editvendor',$data);
-		$this->load->view('fragments/footer');
+			$this->load->view('fragments/header');
+			$this->load->view('editvendor',$data);
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','You are not Authorized Please Login to continue');
+			redirect('Login');
+		}
 	}
 
 	public function addvendortype() {
-		$this->load->view('fragments/header');
-		$this->load->view('addvendortype');
-		$this->load->view('fragments/footer');
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$this->load->view('fragments/header');
+			$this->load->view('addvendortype');
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','You are not Authorized Please Login to continue');
+			redirect('Login');
+		}
 	}
 	
 	public function savevendortype() {
@@ -93,28 +122,41 @@ class Vendor extends CI_Controller {
 		}
 	}
 	public function viewvendortype(){
-
+		if($this->session->userdata('vendor_type_id')==1)
+		{
 		$data['vendortype'] = $this->vendor_type_model->getallvendortype();
 		$this->load->view('fragments/header');
 		$this->load->view('viewvendortype',$data);
 		$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','You are not Authorized Please Login to continue');
+			redirect('Login');
+		}
 	}
 
 
 	public function getVendorTypeByid($id)
 	{
-		$data['vendortype'] = $this->vendor_type_model->getVendorTypeById($id);
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$data['vendortype'] = $this->vendor_type_model->getVendorTypeById($id);
 
-		if($data['vendortype']['vendor_type_id']=='')
-		{
-			$this->session->set_flashdata('reserr','No Vendor Type found for given ID');
-			redirect('Vendor/viewvendortype');
+			if($data['vendortype']['vendor_type_id']=='')
+			{
+				$this->session->set_flashdata('reserr','No Vendor Type found for given ID');
+				redirect('Vendor/viewvendortype');
+			}
+			else
+			{
+				$this->load->view('fragments/header');
+				$this->load->view('editvendortype',$data);
+				$this->load->view('fragments/footer');
+			}
 		}
-		else
-		{
-			$this->load->view('fragments/header');
-			$this->load->view('editvendortype',$data);
-			$this->load->view('fragments/footer');
+		else {
+			$this->session->set_flashdata('reserr','You are not Authorized Please Login to continue');
+			redirect('Login');
 		}
 	}
 
@@ -125,10 +167,7 @@ class Vendor extends CI_Controller {
 		);
 
 		$id=$_POST['vendor_type_id'];
-		
-		
 		$res= $this->vendor_type_model->updateVendorTypeById($id,$data);
-
 		if($res==1)
 		{
 			$this->session->set_flashdata('response','Vendor Type '.$_POST['vendor_type'].' updated successfully');
