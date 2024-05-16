@@ -44,7 +44,7 @@ class Document extends CI_Controller {
 						'regulation_issued_date'	=>	$_POST['issued_date'],
 						'vendor_id'	=>  $this->session->userdata('vendor_type_id')
 					);
-					
+					print_r($data);die();
 		$res = $this->document_model->savedocument($data);		
 		if($res==1){
 				$activity = array(
@@ -71,14 +71,9 @@ class Document extends CI_Controller {
 			$this->load->view('viewdocuments',$data);
 			$this->load->view('fragments/footer');
 		}
-		else if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
+		elseif($this->session->userdata('vendor_type_id')==2)
 		{
-			$vendor_id =$this->session->userdata('vendor_id');
 			
-			$data['docs'] = $this->document_model->getdocumentbyvendorid($vendor_id);
-			$this->load->view('fragments/vendor_header');
-			$this->load->view('viewdocuments',$data);
-			$this->load->view('fragments/footer');
 		}
 
 		else{
@@ -88,36 +83,16 @@ class Document extends CI_Controller {
 	}
 	
 	public function editdocumentbyid($did) {
-		if($this->session->userdata('vendor_type_id')!='')
-		{
-			$data['doc'] = $this->document_model->getdocumentbyvendoriddocid($this->session->userdata('vendor_id'),$did);	
-			if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
-			{
-				if($data['doc']!=null) {	
-					$this->load->view('fragments/vendor_header');
-					$this->load->view('editdocument',$data);
-					$this->load->view('fragments/footer');
-				}
-				else {
-					$this->session->set_flashdata('reserr','No Document found for given ID');
-					redirect('document/viewdocuments');
-				}
-			}
-			else{
-				if($data['doc']!=null) {	
-					$this->load->view('fragments/header');
-					$this->load->view('editdocument',$data);
-					$this->load->view('fragments/footer');
-				}
-				else {
-					$this->session->set_flashdata('reserr','No Document found for given ID');
-					redirect('document/viewdocuments');
-				}
-			}
+		$data['doc'] = $this->document_model->getdocumentbyid($did);	
+		
+		if($data['doc']!=null) {	
+			$this->load->view('fragments/header');
+			$this->load->view('editdocument',$data);
+			$this->load->view('fragments/footer');
 		}
 		else {
-			$this->session->set_flashdata('reserr','You are not Authorized. Please Login to continue.');
-			redirect("Login");
+			$this->session->set_flashdata('reserr','No Document found for given ID');
+			redirect('document/viewdocuments');
 		}
 	}
 	
@@ -133,16 +108,17 @@ class Document extends CI_Controller {
 		$data = array(
 						'doc_id' => $did,
 						'doc_name'	=> 	$dname,
-						'email' => $email,
+						'email'	 =>	$email,
 						'doc_issue_date' =>	$issue_date,
 						'doc_last_renewed_date' => 	$lrenewdate,
 						'license_duration'  => 	$duration
 					);
 		$res = $this->document_model->updatedocument($data,$did);
 		
-		if($res==1) {
+		if($res==1)
+		{
 			$activity = array(
-								'activity' => $dname.' updated successfully',
+								'activity'		=>	$dname.' updated successfully',
 								'activity_date' =>	date('d-m-Y H:i:s')
 			);
 			$this->activity_model->saveactivity($activity);
@@ -190,12 +166,6 @@ class Document extends CI_Controller {
 				echo "<br>".$docs['doc_name']." will expired on ".$next_year;
 			}
 		}
-	}
-
-	public function upload()
-	{
-		echo "upload() called";
-		die();
 	}
 }
 ?>

@@ -17,7 +17,26 @@ class Document_model extends CI_Model {
 	
 	public function getdocumentbyid($did)
 	{
-		return $this->db->from('tbl_document')->where('doc_id',$did)->get()->row_array();
+		return $this->db->from('tbl_document')->where('regulation_id',$did)->get()->row_array();
+	}
+
+	public function getdocumentbyvendorid($vendor_id)
+	{
+		return $this->db->select("*")
+						->from('tbl_document')
+						->where('vendor_id',$vendor_id)
+						->get()
+						->result_array();
+	}
+
+	public function getdocumentbyvendoriddocid($vendor_id,$docid)
+	{
+		return $this->db->select("*")
+						->from('tbl_document')
+						->where('vendor_id',$vendor_id)
+						->where('regulation_id',$docid)
+						->get()
+						->row_array();
 	}
 	
 	public function updatedocument($data,$did)

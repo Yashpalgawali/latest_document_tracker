@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title>Add Document</title>
 		<script>
 			$(document).ready(function(){
-				$('#issued_date').datetimepicker({ 
+				$('#regulation_issued_date').datetimepicker({ 
 									format : 'YYYY-MM-DD',
 									//format : 'DD-MM-YYYY',
 									icons  : {
@@ -45,17 +45,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				{
 					const d = new Date(""+date);
 					let cur_month = d.getMonth()+1;
-					let cur_date = d.getDate();
-					let cur_year= d.getFullYear();
+					let cur_date  = d.getDate();
+					let cur_year  = d.getFullYear();
 					
 					if(cur_month==12)
 					{
 						cur_month=1;
-							if(cur_month<10) {
+							if(cur_month < 10) {
 							cur_month =  "0"+cur_month;
 						}
 	
-						if(cur_date<10) {
+						if(cur_date < 10) {
 							cur_date = "0"+cur_date;
 						}
 					
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					alert('quarterly');
 					if(cur_month==10) 
 					{
-						alert('MOnth ='+10)
+						alert('Month ='+10)
 						let next_month=1;
 
 						if(next_month<10) {
@@ -93,8 +93,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							cur_date = "0"+cur_date;
 						}
 					
-						//alert('month '+next_month+'\n date '+cur_date+"\n year = "+(d.getFullYear()+1))
-
 						let next_quarter_date = (d.getFullYear()+1)+"-"+(next_month)+"-"+cur_date;
 						alert('Next quarter date is '+next_quarter_date)
 						$('#last_renewed_date').val(next_quarter_date);
@@ -133,7 +131,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$('#last_renewed_date').val(next_quarter_date);
 						return 0;
 					}
-					/*else {
+					else {
 					cur_month+=3;
 
 					if(cur_month<10) {
@@ -146,8 +144,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				
 					let next_quarter_date = d.getFullYear()+"-"+(cur_month)+"-"+cur_date;
 					$('#last_renewed_date').val(next_quarter_date);
-				  }*/
-				}
+				  }
+				} 
 				if(freq==3)
 				{
 					const d = new Date(""+date);
@@ -227,7 +225,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		<div class="card">
-			<div class="card-header"> <h4>Add Document</h4> </div>
+			<div class="card-header"> <h4>Add Regulation</h4> </div>
 			<div class="card-body">			
 				<form action="<?php echo base_url();?>document/savedocument" method="POST" >
 				
@@ -242,7 +240,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 
 				<div class="form-group">
-					<label for="regulation_frequency">Regulation Description<span style="color:red;">*<span> </label>
+					<label for="regulation_frequency">Regulation Frequency<span style="color:red;">*<span> </label>
 						<select id="regulation_frequency" name="regulation_frequency" class="form-control">
 							<option selected disabled>Please select Regulation updation Frequency</option>
 							<option value="1">Monthly</option>
@@ -252,9 +250,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				
 				<div class="form-group">
-					<label for="issued_date">Regualtion Issued Date<span style="color:red;">*<span> </label>
+					<label for="regulation_issued_date">Regulation Issued Date<span style="color:red;">*<span> </label>
 						<div class="input-group">
-							<input class="form-control border-right-0" id="issued_date" name="issued_date" onfocusout="updateregulation(this.value)" required>
+							<input class="form-control border-right-0" id="regulation_issued_date" name="regulation_issued_date" onfocusout="updateregulation(this.value)" required>
 								<span class="input-group-append bg-white border-left-0">
 									<span class="input-group-text bg-transparent">
 											<i class="fa fa-calendar fa-lg"></i>
@@ -274,19 +272,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</span>
 						</div>
 				</div>
-				
-				
-				<div class="form-group" >
-					<label for="license_duration">License Duration<span style="color:red;">*<span> </label>
-						<i class="fa fa-edit">
-							<div class="tooltip">Hover over me
-								<span class="tooltiptext">Tooltip text</span>
-							</div>
-						</i>
-					
-						<input type="number" class="form-control mb-3" name="license_duration" id="license_duration"   placeholder="Enter the License period" required/>	
-					
-				</div>	
 					<input type="submit" class="btn btn-primary mb-3" value="Add Document" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				
 				</form>

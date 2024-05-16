@@ -44,42 +44,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="container">
 		<?php 
 			if($this->session->flashdata('response'))
-			{?> <div class="alert alert-success">	<?php echo $this->session->flashdata('response');?></div>
+			{?> <div class="alert alert-success"><h6><?php echo $this->session->flashdata('response');?></h6></div>
 		<?php
 			}
 			if($this->session->flashdata('reserr'))
-			{?> <div class="alert alert-danger">	<?php echo $this->session->flashdata('reserr');?></div>
+			{?> <div class="alert alert-danger"><h6><?php echo $this->session->flashdata('reserr');?></h6></div>
 			<?php	
 			}	
 			?>
 		 <!-- start: PAGE HEADER -->
 			<div class="row">
 				<div class="col-sm-12">
-					
 					<!-- start: PAGE TITLE & BREADCRUMB -->
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
 							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
 						</li>
-						<li class="breadcrumb-item active" aria-current="page">View Documents </li>
+						<li class="breadcrumb-item active" aria-current="page">View Regulation </li>
 					</ol>
 				</div>
 			</div>
 		<div class="card">
 			<div class="card-header">
-				<h4>View Documents</h4>
+				<div>
+					<h4>View Regulation 
+					<a style ="float:right !important;" href="<?php echo base_url();?>Document" class="btn btn-primary">Add Regulation</a>
+					</h4>
+				</div>
 			</div>
 			<div class="card-body">			
-				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" width="100%" id="doctable">
+				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" width="100%" >
 				<thead>
 					<tr>
 						<th>Sr No.</th>
-						<th>Document </th>
-						<th>Document<br> Issued Date</th>
-						<th>Last Renewed <br>Date</th>
+						<th>Regulation Name </th>
+						<th>Regulation Description </th>
+						<th>Regulation Frequency </th>
+						<th>Regulation Issued<br>Date</th>
 						<th>Next Renewal <br>Date</th>
-						<th>Renewal <br>Period<sub>(in years)</sub></th>
-						<th>Email</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -91,50 +93,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								?>
 								<tr>
 									<td> <?php echo $cnt++; ?> </td>
-									<td> <?php echo $doc['doc_name'];?> </td>
-								
-									<td> <?php echo $doc['doc_issue_date'];?> </td>
-									<td> <?php echo $doc['doc_last_renewed_date'];?></td>
-									<?php 
-											$date = strtotime($doc['doc_last_renewed_date']);
-											$m = date("m",$date);
-											$y = date("Y",$date);
-											$d = date("d",$date);
-											
-											//$mnths = is_float($doc['license_duration']);
-
-											$next_year = ($y+$doc['license_duration'])."-".$m."-".$d;
-									?>
+									<td> <?php echo $doc['regulation_name'];?> </td>
+									<td> <?php echo $doc['regulation_description'];?> </td>
+									<td> <?php 
+											if($doc['regulation_frequency']==1) {
+												echo "Monthly";
+											}
+											if($doc['regulation_frequency']==2) {
+												echo "Quarterly";
+											}
+											if($doc['regulation_frequency']==3) {
+												echo "Yearly";
+											}
+										 ?>
+									</td>
 									
-									<?php 
-												$today  = date('Y-m-d');
-												// creates DateTime objects
-												$lrenew = date_create($next_year);
-												$today  = date_create(date('Y-m-d'));
-												
-												$diff = date_diff($today,$lrenew);
-												$days = $diff->format('%R%a');
-												
-												if($days<=(30) && $days>=0 )
-												{
-													?><td  style="color:red; "> <?php  echo $next_year."<sub> Due for Renewal</sub>";?></td>
-												<?php
-												}
-												elseif($days<=(30) && $days<=(-1) )
-												{
-													?><td  style="color:red;"> <?php  echo $next_year."<sub> Expired</sub>";?></td>
-												<?php
-												}
-												else
-												{
-													?><td style="color:black;"> <?php echo $next_year;?></td>
-												<?php
-												}
-										
-									?>
-									<td><?php echo $doc['license_duration'];?></td>	
-									<td> <?php echo $doc['email'];?> </td>									
-									<td> <a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['doc_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> </td>
+									<td><?php echo $doc['regulation_issued_date'];?></td>	
+									<td>
+										<?php 
+										if($doc['regulation_frequency']==1) {
+											$date = $doc['regulation_issued_date'];
+											$newDate = date('Y-m-d', strtotime($date. ' + 1 months'));
+											echo $newDate;
+										}
+										if($doc['regulation_frequency']==2) {
+											$date = $doc['regulation_issued_date'];
+											$newDate = date('Y-m-d', strtotime($date. ' + 3 months'));
+											echo $newDate;
+										}
+										if($doc['regulation_frequency']==3) {
+											$date = $doc['regulation_issued_date'];
+											$newDate = date('Y-m-d', strtotime($date. ' + 12 months'));
+											echo $newDate;
+										}
+										?>
+									</td>
+									<td> <a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> </td>
 								</tr>
 							<?php
 							}
