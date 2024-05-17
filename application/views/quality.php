@@ -13,8 +13,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<h3 class="form-control">Quality Dashboard</h3>
 		
-	<a href="<?php echo base_url();?>Vendor">Add Document</a>
-	<a href="<?php echo base_url();?>Vendor/addvendortype">View Document</a>
+	<a href="<?php echo base_url();?>Document">Add Regualtion</a>
+	<a href="<?php echo base_url();?>Document/viewdocuments">View Regualtions</a>
 	
 </div>
 

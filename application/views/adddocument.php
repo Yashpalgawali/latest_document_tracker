@@ -216,8 +216,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<!-- start: PAGE TITLE & BREADCRUMB -->
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
-						</li>
+						
+						<a href="<?php 
+									if($this->session->userdata('vendor_type_id')==1) {
+										echo base_url('Home');
+									}
+									if($this->session->userdata('vendor_type_id')==2) {
+										echo base_url('Quality');
+									}
+									if($this->session->userdata('vendor_type_id')==3) {
+										echo base_url('Social');
+									}
+									
+									?>"><i class="fa fa-home "></i> Home </a>
+							</li>
 						<li class="breadcrumb-item active" aria-current="page">
 							Add Regulation
 						</li>
@@ -227,7 +239,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="card">
 			<div class="card-header"> <h4>Add Regulation</h4> </div>
 			<div class="card-body">			
-				<form action="<?php echo base_url();?>document/savedocument" method="POST" >
+				<form action="<?php echo base_url();?>document/savedocument" method="POST" enctype="multipart/form-data" >
 				
 				<div class="form-group">
 					<label for="regulation_name">Regulation Name<span style="color:red;">*<span> </label>
@@ -242,7 +254,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="form-group">
 					<label for="regulation_frequency">Regulation Frequency<span style="color:red;">*<span> </label>
 						<select id="regulation_frequency" name="regulation_frequency" class="form-control">
-							<option selected disabled>Please select Regulation updation Frequency</option>
+							<option selected disabled>Please Select Regulation Updation Frequency</option>
 							<option value="1">Monthly</option>
 							<option value="2">Quarterly</option>
 							<option value="3">Yearly</option>
@@ -271,6 +283,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</span>
 								</span>
 						</div>
+				</div>
+				<div class="form-group">
+					<label for="regulation">Upload File </label>	
+					
+						<input type="file" name="regulation" id="regulation" class="form-control">
+					
 				</div>
 					<input type="submit" class="btn btn-primary mb-3" value="Add Document" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				

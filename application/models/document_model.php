@@ -41,7 +41,7 @@ class Document_model extends CI_Model {
 	
 	public function updatedocument($data,$did)
 	{
-		$this->db->where('doc_id',$did);
+		$this->db->where('regulation_id',$did);
 		return $this->db->update('tbl_document',$data);
 	}
 }

@@ -12,8 +12,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="container">
 
 	<h3 class="form-control">Social Dashboard</h3>
-	<a href="<?php echo base_url();?>Vendor">Add Document</a>
-	<a href="<?php echo base_url();?>Vendor/addvendortype">View Document</a>
+	<a href="<?php echo base_url();?>Document">Add Document</a>
+	<a href="<?php echo base_url();?>Document/viewdocuments">View Document</a>
 </div>
 
 </div>

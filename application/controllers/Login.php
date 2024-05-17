@@ -26,7 +26,7 @@ class Login extends CI_Controller {
 		
 		$decrypt_pass = $this->encryption->decrypt($res['password']);
 
-		if(!empty($res)){
+		if(!empty($res)) {
 		if(strcmp($decrypt_pass,$_POST['password'])==0) {
 	
 			$this->session->set_userdata('vendor_id',$res['vendor_id']);

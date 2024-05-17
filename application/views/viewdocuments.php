@@ -53,17 +53,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			}	
 			?>
 		 <!-- start: PAGE HEADER -->
-			<div class="row">
-				<div class="col-sm-12">
-					<!-- start: PAGE TITLE & BREADCRUMB -->
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item">
-							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
-						</li>
-						<li class="breadcrumb-item active" aria-current="page">View Regulation </li>
-					</ol>
-				</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- start: PAGE TITLE & BREADCRUMB -->
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="<?php 
+									if($this->session->userdata('vendor_type_id')==1) {
+										echo base_url('Home');
+									}
+									if($this->session->userdata('vendor_type_id')==2) {
+										echo base_url('Quality');
+									}
+									if($this->session->userdata('vendor_type_id')==3) {
+										echo base_url('Social');
+									}
+									
+									?>"><i class="fa fa-home "></i> Home </a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">
+						<?php echo $this->session->userdata('vendor_type'); ?> 
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">View Regulation </li>
+				</ol>
 			</div>
+		</div>
 		<div class="card">
 			<div class="card-header">
 				<div>
@@ -82,14 +96,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<th>Regulation Frequency </th>
 						<th>Regulation Issued<br>Date</th>
 						<th>Next Renewal <br>Date</th>
+						<th>File </th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 						<?php
 							$cnt=1;
-							foreach($docs as $doc)
-							{
+							foreach($docs as $doc) {
 								?>
 								<tr>
 									<td> <?php echo $cnt++; ?> </td>
@@ -107,7 +121,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											}
 										 ?>
 									</td>
-									
 									<td><?php echo $doc['regulation_issued_date'];?></td>	
 									<td>
 										<?php 
@@ -128,6 +141,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										}
 										?>
 									</td>
+									<!-- <td><a href="<?php echo base_url();$doc['file_path'] ;?>"> <?php echo $doc['file_name']; ?></a></td> -->
+									<td><a href="<?php echo base_url(''. $doc['file_path']);?>" target='_blank'><?php echo $doc['file_name']; ?></a></td>
 									<td> <a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> </td>
 								</tr>
 							<?php

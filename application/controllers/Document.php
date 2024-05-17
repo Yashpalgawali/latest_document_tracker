@@ -7,7 +7,7 @@ class Document extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->library('encryption');
+		$this->load->library(array('encryption','upload'));
 		$this->load->model(array('document_model','email_model','activity_model'));
 		$this->load->config('email_config');
 	}
@@ -32,18 +32,40 @@ class Document extends CI_Controller {
 		}
 	}
 	
+	private function ensure_upload_directory() {
+        $upload_path = './uploads/'.$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/';
+		
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, true);
+        }
+    }
+
 	public function savedocument()
-	{
-		// echo "Vendor Type Id is <br>";
-		// print_r($this->session->userdata('vendor_type_id'));
-		// die();
+	{ 	
+		$this->ensure_upload_directory();
+		$config['upload_path'] = 'uploads/' .$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/';
+		$config['allowed_types'] = 'pdf';
+		$config['max_size'] = 2048;
+		$this->upload->initialize($config);
+		
+		if (!$this->upload->do_upload('regulation')) {
+			$data['error'] = $this->upload->display_errors();
+			redirect('Document/adddocument');
+		}
+		else {
+		$upload_data = $this->upload->data();
+
+		$file_path = 'uploads/' .$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/'. $upload_data['file_name'];		
+		
 		$data = array(
-						'regulation_name'	=>	$_POST['regulation_name'],
-						'regulation_description'	=>	$_POST['regulation_description'],
-						'regulation_frequency' =>  $_POST['regulation_frequency'],
-						'regulation_issued_date'	=>	$_POST['issued_date'],
-						'vendor_id'	=>  $this->session->userdata('vendor_type_id')
-					);
+			'regulation_name'	=>	$_POST['regulation_name'],
+			'regulation_description'	=>	$_POST['regulation_description'],
+			'regulation_frequency' =>  $_POST['regulation_frequency'],
+			'regulation_issued_date' =>	$_POST['regulation_issued_date'],
+			'vendor_id'	=>  $this->session->userdata('vendor_id'),
+			'file_path' => $file_path,
+			'file_name' => $upload_data['file_name']
+		);
 					
 		$res = $this->document_model->savedocument($data);		
 		if($res==1){
@@ -61,7 +83,7 @@ class Document extends CI_Controller {
 			redirect("document/viewdocuments");
 		}
 	}
-	
+}
 	public function viewdocuments()
 	{
 		if($this->session->userdata('vendor_type_id')==1)
@@ -122,40 +144,50 @@ class Document extends CI_Controller {
 	}
 	
 	public function updatedocument()
-	{
-		$did = $_POST['doc_id'];
-		$dname = $_POST['doc_name'];
-		$issue_date = $_POST['issued_date'];
-		$lrenewdate = $_POST['last_renewed_date'];
-		$duration = $_POST['license_duration'];
-		$email	= $_POST['email'];
+	{ 
+		$did = $_POST['regulation_id'];
+		$this->ensure_upload_directory();
+		$config['upload_path'] = 'uploads/' .$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/';
+		$config['allowed_types'] = 'pdf';
+		$config['max_size'] = 2048;
+		$this->upload->initialize($config);
 		
-		$data = array(
-						'doc_id' => $did,
-						'doc_name'	=> 	$dname,
-						'email' => $email,
-						'doc_issue_date' =>	$issue_date,
-						'doc_last_renewed_date' => 	$lrenewdate,
-						'license_duration'  => 	$duration
-					);
+
+		if (!$this->upload->do_upload('regulation')) {
+			$this->session->set_flashdata('reserr','No file is selected');
+			redirect('Document/editdocumentbyid/'.$did);
+		}
+		else {
+			$upload_data = $this->upload->data();
+			$file_path = 'uploads/' .$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/'. $upload_data['file_name'];		
+			
+			$data = array(
+				'regulation_name' => $_POST['regulation_name'],
+				'regulation_description' =>	$_POST['regulation_description'],
+				'regulation_frequency' => $_POST['regulation_frequency'],
+				'regulation_issued_date' =>	$_POST['regulation_issued_date'],
+				'vendor_id'	=> $this->session->userdata('vendor_id'),
+				'file_path' => $file_path,
+				'file_name' => $upload_data['file_name']
+			);
+
 		$res = $this->document_model->updatedocument($data,$did);
 		
 		if($res==1) {
 			$activity = array(
-								'activity' => $dname.' updated successfully',
+								'activity' => $_POST['regulation_name'].' updated successfully',
 								'activity_date' =>	date('d-m-Y H:i:s')
 			);
 			$this->activity_model->saveactivity($activity);
-			
-			$this->session->set_flashdata('response','Document is updated successfully');
+			$this->session->set_flashdata('response','Regulation '.$_POST['regulation_name'].' is updated successfully');
 			redirect('document/viewdocuments');
 		}
 		else{
-			$this->session->set_flashdata('reserr','Document is not updated');
+			$this->session->set_flashdata('reserr','Regulation '.$_POST['regulation_name'].' is not updated');
 			redirect('document/viewdocuments');
 		}
 	}
-	
+}
 	public function getdocumentdates()
 	{
 		$data['docs'] = $this->document_model->getalldocuments();
