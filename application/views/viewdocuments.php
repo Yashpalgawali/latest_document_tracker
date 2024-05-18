@@ -150,9 +150,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<!-- <td><a href="<?php echo base_url();$doc['file_path'] ;?>"> <?php echo $doc['file_name']; ?></a></td> -->
 									<td><a href="<?php echo base_url(''. $doc['file_path']);?>" target='_blank'><?php echo $doc['file_name']; ?></a></td>
 									<td>
-										<a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> 
-										<a href="<?php echo base_url('/document/viewregulationhistory/'.$doc['vendor_id']); ?>"><i class="fa fa-eye"></i>&nbsp;History</a>
-									</td>
+										<?php
+											if($this->session->userdata('vendor_type_id')==1)
+											{?>
+												<a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> </td>
+											<?php }
+											?>
+										
 								</tr>
 							<?php
 							}

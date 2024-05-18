@@ -244,6 +244,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="card-body">			
 				<form action="<?php echo base_url();?>Document/updatedocument" method="POST" enctype="multipart/form-data" >
 				<input type="hidden" name="regulation_id" value="<?php echo $doc['regulation_id']; ?>">
+				<input type="hidden" name="vendor_id" value="<?php echo $doc['vendor_id']; ?>">
 				<div class="form-group">
 					<label for="regulation_name">Regulation Name<span style="color:red;">*<span> </label>
 						<input type="text" name="regulation_name" id="regulation_name"  value="<?php echo $doc['regulation_name'];?>" class="form-control mb-3" placeholder="Enter the Regulation Name" required/>

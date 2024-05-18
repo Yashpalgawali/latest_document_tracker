@@ -81,13 +81,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<td> <?php echo $vendor['vendor_name'];?> </td>
 									<td> <?php echo $vendor['vendor_email'];?> </td>
 									<td> <?php echo $vendor['vendor_type'];?> </td>
-									<td> <?php if($vendor['enabled']==1)
-											{ echo "Active"; }
-											if($vendor['enabled']==2)
-											{ echo "Disabled"; }
+									<td> <?php
+									 	if($vendor['enabled']==1)
+										{ echo "Active"; }
+										if($vendor['enabled']==2)
+										{ echo "Disabled"; }
 										;?>
 									</td>
-									<td> <a href="<?php echo base_url('Vendor/editvendorbyid/'.$vendor['vendor_id']);?>"><i class="fa fa-edit"></i> Edit</a></td>
+									<td>
+									 <a href="<?php echo base_url('Vendor/editvendorbyid/'.$vendor['vendor_id']);?>"><i class="fa fa-edit"></i> Edit</a>
+									 <a href="<?php echo base_url('/document/viewregulationhistory/'.$vendor['vendor_id']); ?>"><i class="fa fa-eye"></i>&nbsp;History</a>
+									</td>
 								</tr>
 							<?php
 							}
@@ -104,4 +108,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
-</html>

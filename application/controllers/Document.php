@@ -64,18 +64,8 @@ class Document extends CI_Controller {
 			);
 					
 			$res = $this->document_model->savedocument($data);
-			$lastdocid =  $this->vendor_model->getLastInsertedId();
-
+			
 			if($res==1) {
-				$histdata = array(
-								'vendor_id'=> $this->session->userdata('vendor_id'),
-								'regulation_id' => $lastdocid,
-								'operation_date' => date('d-m-Y'),
-								'operation_time' => date('H:i:s')
-							);
-				$output = $this->regulation_history_model->savehistory($histdata);
-						print_r($output);
-
 				$activity = array(
 									"activity" => $_POST['regulation_name']." is added successfully",
 									"activity_date"	=>	date('d-m-Y H:i:s')
@@ -85,7 +75,7 @@ class Document extends CI_Controller {
 				$this->session->set_flashdata('response','Regulation '.$_POST['regulation_name'].' is Added successfully');
 				redirect('document/viewdocuments');
 		}
-		else{
+		else {
 			$this->session->set_flashdata('reserr','Regulation '.$_POST['regulation_name'].' is not added');
 			redirect("document/viewdocuments");
 		}
@@ -103,7 +93,6 @@ class Document extends CI_Controller {
 		else if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
 		{
 			$vendor_id =$this->session->userdata('vendor_id');
-			
 			$data['docs'] = $this->document_model->getdocumentbyvendorid($vendor_id);
 			$this->load->view('fragments/vendor_header');
 			$this->load->view('viewdocuments',$data);
@@ -118,7 +107,15 @@ class Document extends CI_Controller {
 	public function editdocumentbyid($did) {
 		if($this->session->userdata('vendor_type_id')!='')
 		{
-			$data['doc'] = $this->document_model->getdocumentbyvendoriddocid($this->session->userdata('vendor_id'),$did);	
+			if($this->session->userdata('vendor_type_id')==1)
+			{
+				$data['doc'] = $this->document_model->getdocumentbyvendoriddocidforadmin($did);	
+			}
+			 else if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
+			 {
+				$data['doc'] = $this->document_model->getdocumentbyvendoriddocid($this->session->userdata('vendor_id'),$did);	
+			 }
+			
 			if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
 			{
 				if($data['doc']!=null) {	
@@ -152,8 +149,9 @@ class Document extends CI_Controller {
 	public function updatedocument()
 	{ 
 		$did = $_POST['regulation_id'];
+		$vendor_id = $doc['vendor_id'];
 		$this->ensure_upload_directory();
-		$config['upload_path'] = 'uploads/' .$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/';
+		$config['upload_path'] = 'uploads/' .$this->session->userdata('vendor_type').'/'.$vendor_id.'/';
 		$config['allowed_types'] = 'pdf';
 		$config['max_size'] = 2048;
 		$this->upload->initialize($config);
@@ -164,14 +162,14 @@ class Document extends CI_Controller {
 		}
 		else {
 			$upload_data = $this->upload->data();
-			$file_path = 'uploads/' .$this->session->userdata('vendor_type').'/'.$this->session->userdata('vendor_id').'/'. $upload_data['file_name'];		
+			$file_path = 'uploads/' .$this->session->userdata('vendor_type').'/'.$doc['vendor_id'].'/'. $upload_data['file_name'];		
 			
 			$data = array(
 				'regulation_name' => $_POST['regulation_name'],
 				'regulation_description' =>	$_POST['regulation_description'],
 				'regulation_frequency' => $_POST['regulation_frequency'],
 				'regulation_issued_date' =>	$_POST['regulation_issued_date'],
-				'vendor_id'	=> $this->session->userdata('vendor_id'),
+				'vendor_id'	=> $vendor_id,
 				'file_path' => $file_path,
 				'file_name' => $upload_data['file_name']
 			);
@@ -194,13 +192,7 @@ class Document extends CI_Controller {
 	}
 }
 
-public function viewregulationhistory($vendor_id)
-{
-	// $data = $this->regulation_history_model->gethistorybyvendorid($id,$vendor_id);
-	$data = $this->regulation_history_model->gethistorybyvendorid($vendor_id);
-	echo "<br>Vendor ID is ".$vendor_id;
-	print_r($data);
-}
+
 	public function getdocumentdates()
 	{
 		$data['docs'] = $this->document_model->getalldocuments();

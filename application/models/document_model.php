@@ -29,16 +29,25 @@ class Document_model extends CI_Model {
 						->result_array();
 	}
 
-	public function getdocumentbyvendoriddocid($vendor_id,$docid)
+	public function getdocumentbyvendoriddocid($vendor_id,$regulation_id)
 	{
 		return $this->db->select("*")
 						->from('tbl_document')
 						->where('vendor_id',$vendor_id)
-						->where('regulation_id',$docid)
+						->where('regulation_id',$regulation_id)
 						->get()
 						->row_array();
 	}
-	
+
+	public function getdocumentbyvendoriddocidforadmin($regulation_id)
+	{
+		return $this->db->select("*")
+						->from('tbl_document')
+						->where('regulation_id',$regulation_id)
+						->get()
+						->row_array();
+	}
+  
 	public function updatedocument($data,$did)
 	{
 		$this->db->where('regulation_id',$did);
