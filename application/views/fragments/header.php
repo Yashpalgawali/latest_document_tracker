@@ -19,13 +19,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
-      <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url();?>">Home</a>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo base_url('Home');?>">Home</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url();?>Login">Login</a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Document</a>
           <ul class="dropdown-menu">

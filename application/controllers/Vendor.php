@@ -58,8 +58,6 @@ class Vendor extends CI_Controller {
 			$this->session->set_flashdata('reserr','Vendor '.$_POST['vendor_name'].' is not registered');
 			redirect('Vendor/viewvendor');
 		 }
-		 
-		
 	}
 
 	public function viewvendor() {
@@ -93,9 +91,36 @@ class Vendor extends CI_Controller {
 		}
 	}
 
+	public function updatevendor() {	
+		$vid = $_POST['vendor_id'];
+		$enc_pass = $this->encryption->encrypt($_POST['password']);
+		$data = array( 
+				'vendor_type_id' => $_POST['vendor_type_id'],
+				'vendor_name' => $_POST['vendor_name'],
+				'vendor_email'=> $_POST['vendor_email'],
+				'enabled'  => $_POST['enabled']
+		);
+		
+		 $res = $this->vendor_model->updatevendor($vid,$data);
+		 
+		 if($res==1) {
+			$newdata = array(
+				'password' => $enc_pass,
+				'email'=> $_POST['vendor_email']
+			);
+			$output = $this->login_model->updateeuser($newdata,$this->session->userdata('user_id'));
+		
+			$this->session->set_flashdata('response','Vendor '.$_POST['vendor_name'].' is Updated Successfully ');
+			redirect('Vendor/viewvendor');
+		 }
+		 else {
+			$this->session->set_flashdata('reserr','Vendor '.$_POST['vendor_name'].' is not Updated');
+			redirect('Vendor/viewvendor');
+		 }
+	}
+
 	public function addvendortype() {
-		if($this->session->userdata('vendor_type_id')==1)
-		{
+		if($this->session->userdata('vendor_type_id')==1) {
 			$this->load->view('fragments/header');
 			$this->load->view('addvendortype');
 			$this->load->view('fragments/footer');

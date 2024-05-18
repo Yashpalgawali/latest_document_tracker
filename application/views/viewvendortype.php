@@ -4,17 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>View Vendor Type</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap.min.css"/>
-	
-		<!-- DataTable -->
-		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-		<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-		<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
-
-		<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
-		<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
 		
 	<script>
 		$(document).ready(function() {
@@ -42,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		<div class="card">
 			<div class="card-header">
-				<h4>View Vendor Type</h4>
+				<h4>View Vendor Type <a href="<?php echo base_url();?>Vendor/addvendortype" style="float: right;" class="btn btn-primary">Add Vendor Type</a></h4>
 			</div>
 			<div class="card-body">
 			<?php if($this->session->flashdata('response'))
@@ -79,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>	<tr>
 						<td> <?php echo $cnt++; ?></td>
 						<td> <?php echo $vtype['vendor_type']; ?></td>
-						<td> <a href="<?php echo base_url('Vendor/getVendorTypeByid/'.$vtype['vendor_type_id']);?>">Edit</a> </td>
+						<td> <a href="<?php echo base_url('Vendor/getVendorTypeByid/'.$vtype['vendor_type_id']);?>"><i class="fa fa-edit"></i> Edit</a> </td>
 						</tr>
 					<?php 
 					}
@@ -92,3 +87,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" href="<?php echo base_url();?>/assets/css/home.css">
 		
 </body>
+		<!-- DataTable -->
+		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>

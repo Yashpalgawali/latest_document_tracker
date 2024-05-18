@@ -15,7 +15,7 @@ class Login extends CI_Controller {
 	{
 		$data['vtype'] = $this->vendor_type_model->getallvendortype();
 
-		$this->load->view('fragments/header');
+		//$this->load->view('fragments/header');
 		$this->load->view('Login',$data);
 		$this->load->view('fragments/footer');
 	}
@@ -23,12 +23,12 @@ class Login extends CI_Controller {
 	public function login()
 	{ 
 		$res = $this->login_model->validateUser($_POST['email'],$_POST['user_type']);
-		
+	
 		$decrypt_pass = $this->encryption->decrypt($res['password']);
 
 		if(!empty($res)) {
 		if(strcmp($decrypt_pass,$_POST['password'])==0) {
-	
+			$this->session->set_userdata('user_id',$res['user_id']);
 			$this->session->set_userdata('vendor_id',$res['vendor_id']);
 			$this->session->set_userdata('vendor_name',$res['vendor_name']);
 			$this->session->set_userdata('enabled',$res['enabled']);

@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Add Vendor Type</title>
-	
 </head>
 
 <body>
@@ -16,10 +16,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<!-- start: PAGE TITLE & BREADCRUMB -->
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
+						<?php if($this->session->userdata('vendor_type_id')==1)	
+						{
+							?><a href="<?php echo base_url('Home');?>"><i class="fa fa-home "></i> Home </a>
+						<?php 
+						}
+						?>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">
-							Add Vendor Types
+							Add Vendor Type
 						</li>
 					</ol>
 				</div>
@@ -30,14 +35,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 			<div class="card-body">			
 				<form action="<?php echo base_url();?>Vendor/savevendortype" method="POST" >
-				
 				<div class="form-group">
 					<label for="vendor_type">Vendor Type<span style="color:red;">*<span> </label>
 						<input type="text" name="vendor_type" id="vendor_type" class="form-control mb-3" placeholder="Enter the Vendor Type" required/>
 				</div>
-				
-				<input type="submit" class="btn btn-primary mb-3" value="Add Vendor" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
-				
+					<input type="submit" class="btn btn-primary mb-3" value="Add Vendor" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				</form>
 			</div>
 	  </div>

@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Add Document</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Add Regulation</title>
 		<script>
 			$(document).ready(function(){
 				$('#regulation_issued_date').datetimepicker({ 
@@ -48,17 +49,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					let cur_date  = d.getDate();
 					let cur_year  = d.getFullYear();
 					
-					if(cur_month==12)
-					{
+					if(cur_month==12) {
 						cur_month=1;
 							if(cur_month < 10) {
 							cur_month =  "0"+cur_month;
 						}
-	
 						if(cur_date < 10) {
 							cur_date = "0"+cur_date;
 						}
-					
 						let next_month_date = (d.getFullYear()+1)+"-"+(cur_month)+"-"+cur_date;
 						$('#last_renewed_date').val(next_month_date);
 					}
@@ -79,12 +77,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					const d = new Date(""+date);
 					let cur_month = d.getMonth()+1;
 					let cur_date = d.getDate();
-					alert('quarterly');
 					if(cur_month==10) 
 					{
-						alert('Month ='+10)
 						let next_month=1;
-
 						if(next_month<10) {
 							next_month =  "0"+next_month;
 						}
@@ -94,15 +89,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}
 					
 						let next_quarter_date = (d.getFullYear()+1)+"-"+(next_month)+"-"+cur_date;
-						alert('Next quarter date is '+next_quarter_date)
 						$('#last_renewed_date').val(next_quarter_date);
 						return 0;
 					}
 
 					if(cur_month==11){
-
 						cur_month=2;
-
 						if(cur_month<10) {
 							cur_month =  "0"+cur_month;
 						}
@@ -133,7 +125,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}
 					else {
 					cur_month+=3;
-
 					if(cur_month<10) {
 						cur_month =  "0"+cur_month;
 					}
@@ -237,6 +228,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		<div class="card">
+		<?php 
+			if($this->session->userdata('reserr')!='') {
+				?>
+				<div ><h6 class="alert alert-danger"> <?php echo $this->session->userdata('reserr');?></h6></div>
+			<?php		
+				}
+			?>	
 			<div class="card-header"> <h4>Add Regulation</h4> </div>
 			<div class="card-body">			
 				<form action="<?php echo base_url();?>document/savedocument" method="POST" enctype="multipart/form-data" >
@@ -285,13 +283,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 				</div>
 				<div class="form-group">
-					<label for="regulation">Upload File </label>	
-					
-						<input type="file" name="regulation" id="regulation" class="form-control">
-					
+					<label for="regulation">Upload File </label>
+						<input type="file" name="regulation" id="regulation" class="form-control" accept=".pdf">
 				</div>
-					<input type="submit" class="btn btn-primary mb-3" value="Add Document" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
-				
+					<input type="submit" class="btn btn-primary mb-3" value="Add Regulation" />&nbsp;&nbsp;
+					<input type="reset"  class="btn btn-primary mb-3" value="Reset" />
 				</form>
 			</div>
 	  </div>

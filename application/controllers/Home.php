@@ -13,8 +13,15 @@ class Home extends CI_Controller {
 	
 	public function index()
 	{
-		$this->load->view('fragments/header');
-		$this->load->view('home');
-		$this->load->view('fragments/footer');
+		if($this->session->userdata('vendor_type_id')==1)
+		{
+			$this->load->view('fragments/header');
+			$this->load->view('home');
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','You Are Not Authorized. Please Login to continue.');
+			redirect('Login');
+		}
 	}
 }

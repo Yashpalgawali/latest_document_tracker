@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Edit Document</title>
 		<script>
 			$(document).ready(function(){
@@ -314,7 +315,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					?>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-primary mb-3" value="Add Document" />&nbsp;&nbsp;
+				<input type="submit" class="btn btn-primary mb-3" value="Update Regulation" />&nbsp;&nbsp;
 				<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				</form>
 			</div>

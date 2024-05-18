@@ -31,6 +31,12 @@ class Vendor_model extends CI_Model {
 	{
 		return $this->db->insert_id();
 	}
+
+	public function updatevendor($vid,$data)
+	{	
+		$this->db->where('vendor_id',$vid);
+		return $this->db->update('tbl_vendor',$data);
+	}
 }
 
 ?>

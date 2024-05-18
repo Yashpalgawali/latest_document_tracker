@@ -23,7 +23,11 @@ class Login_model extends CI_Model {
 						->row_array();
 	}
 
-	
+	public function updateeuser($data,$userid)
+	{	
+		$this->db->where('user_id',$userid);
+		return $this->db->update('tbl_user',$data);
+	}
 }
 
 ?>

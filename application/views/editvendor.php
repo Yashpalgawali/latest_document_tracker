@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Edit Vendor</title>
-
 	<script>
 		$(document).ready(function(){
 				$("#cnfpassword").focusout(function(e){
@@ -72,24 +72,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 			 
 			<div class="form-group">
-					<label for="vendor_type_id">Select Vendor Type</label>
-						<select name="vendor_type_id" id="vendor_type_id" class="form-control">
-							<option disabled>Please Select Vendor Type</option>
-						<?php foreach($vendortype as $vtype)
-						{
-							if($vtype['vendor_type_id']==$vendor['vendor_type_id'])
-							{
-								echo "<option selected value='".$vtype['vendor_type_id']."'>".$vtype['vendor_type']."</option>";
-							}
-							else {
-								echo "<option value='".$vtype['vendor_type_id']."'>".$vtype['vendor_type']."</option>";
-							}
+				<label for="vendor_type_id">Select Vendor Type</label>
+					<select name="vendor_type_id" id="vendor_type_id" class="form-control">
+						<option disabled>Please Select Vendor Type</option>
+					<?php foreach($vendortype as $vtype)
+					{
+						if($vtype['vendor_type_id']==$vendor['vendor_type_id']) {
+							echo "<option selected value='".$vtype['vendor_type_id']."'>".$vtype['vendor_type']."</option>";
 						}
-						?>
-						</select>
+						else {
+							echo "<option value='".$vtype['vendor_type_id']."'>".$vtype['vendor_type']."</option>";
+						}
+					}
+					?>
+					</select>
 			</div>
+			<div class="form-group">
+				<label for="enabled">Select Vendor Type</label>
+					<select name="enabled" id="enabled" class="form-control">
+						<option disabled>Please Select </option>
+					<?php 
+					{
+						if($vendor['enabled']==1) {
+							echo "<option selected value='".$vendor['enabled']."'>Enabled</option>";
+							echo "<option value='2'>Disabled</option>";
+						}
+						else if ($vendor['enabled']==2) {
+							echo "<option selected value='".$vendor['enabled']."'>Disabled</option>";
+							echo "<option value='1'>Enabled</option>";
+						}
+					}
+					?>
+					</select>
+			</div>
+
 			
-			<input type="submit" class="btn btn-primary mb-3" id="submit" value="Edit Vendor" />&nbsp;&nbsp;<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
+			<input type="submit" class="btn btn-primary mb-3" id="submit" value="Edit Vendor" />&nbsp;&nbsp;
+			<input type="reset" class="btn btn-primary mb-3 " value="Reset" />
 				
 				</form>
 			</div>

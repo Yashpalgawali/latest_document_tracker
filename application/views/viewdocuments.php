@@ -13,11 +13,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- DataTable -->
 		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-		<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+		<!-- <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
 
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
-		<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
+		<!-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" /> -->
 		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
 <script>
@@ -38,6 +38,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	});
 	
 </script>
+<style>
+	table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+</style>
 </head>
 
 <body>
@@ -68,13 +75,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									if($this->session->userdata('vendor_type_id')==3) {
 										echo base_url('Social');
 									}
-									
 									?>"><i class="fa fa-home "></i> Home </a>
 					</li>
 					<li class="breadcrumb-item active" aria-current="page">
 						<?php echo $this->session->userdata('vendor_type'); ?> 
 					</li>
-					<li class="breadcrumb-item active" aria-current="page">View Regulation </li>
+					<li class="breadcrumb-item active" aria-current="page">View Regulations </li>
 				</ol>
 			</div>
 		</div>
@@ -82,12 +88,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="card-header">
 				<div>
 					<h4>View Regulation 
-					<a style ="float:right !important;" href="<?php echo base_url();?>Document" class="btn btn-primary">Add Regulation</a>
+						<a style ="float:right !important;" href="<?php echo base_url();?>Document" class="btn btn-primary">Add Regulation</a>
 					</h4>
 				</div>
 			</div>
 			<div class="card-body">			
-				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" width="100%" >
+				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" id="doctable" width="100%" >
 				<thead>
 					<tr>
 						<th>Sr No.</th>
@@ -143,7 +149,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</td>
 									<!-- <td><a href="<?php echo base_url();$doc['file_path'] ;?>"> <?php echo $doc['file_name']; ?></a></td> -->
 									<td><a href="<?php echo base_url(''. $doc['file_path']);?>" target='_blank'><?php echo $doc['file_name']; ?></a></td>
-									<td> <a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> </td>
+									<td>
+										<a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> 
+										<a href="<?php echo base_url('/document/viewregulationhistory/'.$doc['vendor_id']); ?>"><i class="fa fa-eye"></i>&nbsp;History</a>
+									</td>
 								</tr>
 							<?php
 							}
