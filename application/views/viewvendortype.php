@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<!-- start: PAGE TITLE & BREADCRUMB -->
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
+							<a href="<?php echo base_url('Home');?>"><i class="fa fa-home "></i> Home </a>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">
 							View Vendor Types
@@ -59,7 +59,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php 
 					}
 				?>
-<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" width="100%" id="vendortable">					<thead>
+				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" 
+					width="100%" id="vendortable">					
+				 <thead>
 						<tr>
 							<th>Sr No.</th>
 							<th>Vendor Type</th>

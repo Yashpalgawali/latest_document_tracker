@@ -15,9 +15,9 @@ class Login_model extends CI_Model {
 		
 		return $this->db->select("*")
 						->from('tbl_user')
-						->join('tbl_vendor','tbl_vendor.vendor_id=tbl_user.vendor_id')
+						->join('tbl_vendor','tbl_vendor.vendor_email=tbl_user.email')
 						->join('tbl_vendor_type','tbl_vendor_type.vendor_type_id=tbl_vendor.vendor_type_id')
-						->where('email',$email)
+						->where('tbl_user.email',$email)
 						->where('tbl_vendor_type.vendor_type_id',$typeid)
 						->get()
 						->row_array();

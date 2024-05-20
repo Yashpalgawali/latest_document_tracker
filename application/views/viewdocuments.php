@@ -93,7 +93,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 			<div class="card-body">			
-				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" id="doctable" width="100%" >
+				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" 
+					id="doctable" width="100%" >
 				<thead>
 					<tr>
 						<th>Sr No.</th>

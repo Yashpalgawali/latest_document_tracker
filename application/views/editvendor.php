@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<!-- start: PAGE TITLE & BREADCRUMB -->
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
-							<a href="<?php echo base_url();?>"><i class="fa fa-home "></i> Home </a>
+							<a href="<?php echo base_url('Home');?>"><i class="fa fa-home "></i> Home </a>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">
 							Update Vendor

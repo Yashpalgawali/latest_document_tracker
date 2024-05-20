@@ -12,12 +12,25 @@ class Login extends CI_Controller {
 	}	
 	
 	public function index()
-	{
-		$data['vtype'] = $this->vendor_type_model->getallvendortype();
-
-		//$this->load->view('fragments/header');
-		$this->load->view('Login',$data);
-		$this->load->view('fragments/footer');
+	{	
+		if($this->session->userdata('vendor_type_id')== null || $this->session->userdata('vendor_type_id')=='')
+		{
+			$data['vtype'] = $this->vendor_type_model->getallvendortype();
+			$this->load->view('Login',$data);
+			$this->load->view('fragments/footer');
+		}
+		else if($this->session->userdata('vendor_type_id')== 1) {
+			redirect('Home');
+		}
+		else if($this->session->userdata('vendor_type_id')== 2) {
+			redirect('Quality');
+		}
+		else if($this->session->userdata('vendor_type_id')== 3) {
+			redirect('Social');
+		}
+		else {
+			redirect('Login');
+		}
 	}
 	
 	public function login()
