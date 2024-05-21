@@ -24,10 +24,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		var tdate = date.getDate();
 		var mnth  = date.getMonth();
 		var year  = date.getFullYear();
-		
 		var today = tdate+"-"+mnth+"-"+year;
 		
-		//alert(tdate.getDate()+"-"+tdate.getMonth());
 		setInterval(()=>{
 				
 		},5000);
@@ -97,7 +95,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<th>Regulation Frequency </th>
 						<th>Inserted Date</th>
 						<th>Uploaded File </th>
-						<th>Uploaded Path </th>
+						<?php if($this->session->userdata('vendor_type_id')==1)
+							{?><th>Uploaded Path </th>
+						<?php } ?>	
 						<th>Operation Date </th>
 						<th>Operation Time </th>
 						<?php if($this->session->userdata('vendor_type_id')==1)
@@ -112,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								?>
 								<tr>
 									<td> <?php echo $cnt++; ?> </td>
-									<td> <?php echo $doc['regulation_name'];?> </td>
+									<td> <?php echo $doc['hist_regulation_name'];?> </td>
 									<td> <?php echo $doc['regulation_description'];?> </td>
 									<td> <?php 
 											if($doc['regulation_frequency']==1) {
@@ -128,20 +128,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</td>
 									<td><?php 	$date = date_create($doc['regulation_issued_date']);
 										echo date_format($date,"d-m-Y");?></td>	
-									<td><a href="<?php echo base_url(''. $doc['file_path']);?>" target='_blank'><?php echo $doc['file_name']; ?></a></td>
+									<td><a href="<?php echo base_url(''. $doc['hist_file_path']);?>" target='_blank'><?php echo $doc['hist_file_name']; ?></a></td>
 									<?php
 										if($this->session->userdata('vendor_type_id')==1)
 										{
 										?>
-										<td> <?php echo base_url(''. $doc['file_path']);?> </td>
+										<td> <?php echo base_url(''. $doc['hist_file_path']);?> </td>
 										<?php }?>
 									<td>
 										<?php 
-											$date = date_create($doc['operation_date']);
+											$date = date_create($doc['hist_operation_date']);
 											echo date_format($date,"d-m-Y");
 										?>
 									</td>
-									<td><?php echo $doc['operation_time'];?></td>
+									<td><?php echo $doc['hist_operation_time'];?></td>
 									<?php if($this->session->userdata('vendor_type_id')==1)
 									{?>
 									<td> </td>

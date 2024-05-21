@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h3 class="form-control">Quality Dashboard</h3>
 		
 	<a href="<?php echo base_url();?>Document">Add Regulation</a>
+	<a href="<?php echo base_url();?>Document">Update Regulation Validity</a>
 	<a href="<?php echo base_url();?>Document/viewdocuments">View Regualtions</a>
 	
 </div>

@@ -193,6 +193,15 @@ class Document extends CI_Controller {
 		$res = $this->document_model->updatedocument($data,$did);
 		
 		if($res==1) {
+			$histdata = array(
+				'vendor_id' => $this->session->userdata('vendor_id'),
+				'regulation_id'=>$last_id,
+				'file_path' => $file_path,
+				'file_name' => $upload_data['file_name'],
+				'operation_date' => date('d-m-Y'),
+				'operation_time' => date('H:i:s')
+			);
+			$this->regulation_history_model->savehistory($histdata);
 			$activity = array(
 								'activity' => $_POST['regulation_name'].' updated successfully',
 								'activity_date' =>	date('d-m-Y H:i:s')
