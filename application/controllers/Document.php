@@ -208,7 +208,7 @@ class Document extends CI_Controller {
 	}
 }
 
-
+//This will get the regulation history by vendor ID and the regulation ID
 public function getdocumenthistorybyvendoranddocid($vendor_id,$regulation_id)
 {
 	if($this->session->userdata('vendor_type_id')!=null || $this->session->userdata('vendor_type_id')!='')
@@ -216,7 +216,14 @@ public function getdocumenthistorybyvendoranddocid($vendor_id,$regulation_id)
 		$data['docs'] = $this->regulation_history_model->gethistorybyvendorid($vendor_id,$regulation_id);
 		if($data!=null)
 		{
-			$this->load->view('fragments/vendor_header');
+			if($this->session->userdata('vendor_type_id')==1)
+			{
+				$this->load->view('fragments/header');
+			}
+			if($this->session->userdata('vendor_type_id')== 2 || $this->session->userdata('vendor_type_id')== 3 )
+			{
+				$this->load->view('fragments/vendor_header');
+			}
 			$this->load->view('viewdocumenthistory',$data);
 			$this->load->view('fragments/footer');
 		}
@@ -225,8 +232,6 @@ public function getdocumenthistorybyvendoranddocid($vendor_id,$regulation_id)
 			redirect('document/viewdocuments');
 		}
 	}
-	
-	
 }
 
 	public function getdocumentdates()

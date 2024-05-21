@@ -97,6 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<th>Regulation Frequency </th>
 						<th>Inserted Date</th>
 						<th>Uploaded File </th>
+						<th>Uploaded Path </th>
 						<th>Operation Date </th>
 						<th>Operation Time </th>
 						<?php if($this->session->userdata('vendor_type_id')==1)
@@ -128,20 +129,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<td><?php 	$date = date_create($doc['regulation_issued_date']);
 										echo date_format($date,"d-m-Y");?></td>	
 									<td><a href="<?php echo base_url(''. $doc['file_path']);?>" target='_blank'><?php echo $doc['file_name']; ?></a></td>
+									<?php
+										if($this->session->userdata('vendor_type_id')==1)
+										{
+										?>
+										<td> <?php echo base_url(''. $doc['file_path']);?> </td>
+										<?php }?>
 									<td>
 										<?php 
-										$date = date_create($doc['operation_date']);
-										echo date_format($date,"d-m-Y");
-											//$date =  date('d-m-Y',$doc['operation_date']);
-											
+											$date = date_create($doc['operation_date']);
+											echo date_format($date,"d-m-Y");
 										?>
 									</td>
 									<td><?php echo $doc['operation_time'];?></td>
 									<?php if($this->session->userdata('vendor_type_id')==1)
 									{?>
-									<td>
-										<a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> 
-									</td>
+									<td> </td>
+									
 									<?php }?>
 									
 								</tr>

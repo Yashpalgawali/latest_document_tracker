@@ -57,7 +57,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		<div class="card">
 			<div class="card-header">
-				<h4>View Vendors</h4>
+				<h4>View Vendors 
+					<a href="<?php echo base_url('Vendor');?>" class="btn btn-primary" style="float : right;">Add Vendor</a>
+				</h4>
 			</div>
 			<div class="card-body">			
 				<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" width="100%" id="doctable">
@@ -66,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<th>Sr No.</th>
 						<th>Name </th>
 						<th>Email</th>
-						<th>Regulation Type</th>
+						<th>Vendor Type</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>

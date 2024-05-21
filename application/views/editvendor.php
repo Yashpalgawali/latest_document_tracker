@@ -88,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</select>
 			</div>
 			<div class="form-group">
-				<label for="enabled">Select Vendor Type</label>
+				<label for="enabled">Select Vendor Status</label>
 					<select name="enabled" id="enabled" class="form-control">
 						<option disabled>Please Select </option>
 					<?php 
