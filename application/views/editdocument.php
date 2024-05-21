@@ -280,7 +280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				
 				<div class="form-group">
-					<label for="regulation_issued_date">Regulation Issued Date<span style="color:red;">*<span> </label>
+					<label for="regulation_issued_date">Regulation Update Date<span style="color:red;">*<span> </label>
 						<div class="input-group">
 							<input class="form-control border-right-0" id="regulation_issued_date" name="regulation_issued_date" value="<?php echo $doc['regulation_issued_date'];?>" onfocusout="updateregulation(this.value)" required>
 								<span class="input-group-append bg-white border-left-0">
@@ -292,7 +292,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				
 				<div class="form-group">
-					<label for="last_renewed_date">Next Renewal Date<span style="color:red;">*<span> </label>
+					<label for="last_renewed_date">Next Update Date<span style="color:red;">*<span> </label>
 						<div class="input-group">
 							<input class="form-control border-right-0" id="last_renewed_date"  name="last_renewed_date" required>
 								<span class="input-group-append bg-white border-left-0">
@@ -304,7 +304,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				<div class="form-group">
 					<label for="regulation">Upload File </label>
-						<input type="file" name="regulation" id="regulation" class="form-control">
+						<input type="file" name="regulation" id="regulation" class="form-control" required accept=".pdf">
 						<div>
 					<?php
 					if($this->session->flashdata('reserr')!=null)

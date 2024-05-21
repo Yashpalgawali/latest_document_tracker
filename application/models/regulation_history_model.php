@@ -10,9 +10,14 @@ class Regulation_history_model extends CI_Model {
 		return $this->db->insert('tbl_regulation_history',$data);
 	}
 
-	public function gethistorybyvendorid($vendor_id)
+	public function gethistorybyvendorid($vendor_id,$regulation_id)
 	{
-		return $this->db->from('tbl_regulation_history')->where('vendor_id',$vendor_id)->get()->result_array();
+		return $this->db->from('tbl_regulation_history')
+						->join('tbl_document','tbl_document.regulation_id=tbl_regulation_history.regulation_id')
+						->join('tbl_vendor','tbl_vendor.vendor_id=tbl_regulation_history.vendor_id')
+						->where('tbl_regulation_history.vendor_id',$vendor_id)
+						//->where('tbl_regulation_history.regulation_id',$regulation_id)
+						->get()->result_array();
 	}
 }
 

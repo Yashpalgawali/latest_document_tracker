@@ -53,6 +53,11 @@ class Document_model extends CI_Model {
 		$this->db->where('regulation_id',$did);
 		return $this->db->update('tbl_document',$data);
 	}
+
+	public function getLastInsertedId()
+	{
+		return $this->db->insert_id();
+	}
 }
 
 ?>

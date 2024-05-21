@@ -64,8 +64,18 @@ class Document extends CI_Controller {
 			);
 					
 			$res = $this->document_model->savedocument($data);
-			
+			$last_id = $this->document_model->getLastInsertedId();
+
 			if($res==1) {
+				$histdata = array(
+					'vendor_id' => $this->session->userdata('vendor_id'),
+					'regulation_id'=>$last_id,
+					'file_path' => $file_path,
+					'file_name' => $upload_data['file_name'],
+					'operation_date' => date('d-m-Y'),
+					'operation_time' => date('H:i:s')
+				);
+				$this->regulation_history_model->savehistory($histdata);
 				$activity = array(
 									"activity" => $_POST['regulation_name']." is added successfully",
 									"activity_date"	=>	date('d-m-Y H:i:s')
@@ -94,6 +104,7 @@ class Document extends CI_Controller {
 		{
 			$vendor_id =$this->session->userdata('vendor_id');
 			$data['docs'] = $this->document_model->getdocumentbyvendorid($vendor_id);
+			
 			$this->load->view('fragments/vendor_header');
 			$this->load->view('viewdocuments',$data);
 			$this->load->view('fragments/footer');
@@ -109,11 +120,16 @@ class Document extends CI_Controller {
 		{
 			if($this->session->userdata('vendor_type_id')==1)
 			{
+				//echo "vendor_type_id is 1 i.e. Admin<br>";
 				$data['doc'] = $this->document_model->getdocumentbyvendoriddocidforadmin($did);	
+				//print_r($data);
 			}
 			 else if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
 			 {
+				//echo "vendor_type_id is ".$this->session->userdata('vendor_type_id') ." i.e. Vendor ". $this->session->userdata('vendor_type')."<br>";
 				$data['doc'] = $this->document_model->getdocumentbyvendoriddocid($this->session->userdata('vendor_id'),$did);	
+				//print_r($data);
+
 			 }
 			
 			if($this->session->userdata('vendor_type_id')==2 || $this->session->userdata('vendor_type_id')==3)
@@ -149,7 +165,7 @@ class Document extends CI_Controller {
 	public function updatedocument()
 	{ 
 		$did = $_POST['regulation_id'];
-		$vendor_id = $doc['vendor_id'];
+		$vendor_id = $_POST['vendor_id'];
 		$this->ensure_upload_directory();
 		$config['upload_path'] = 'uploads/' .$this->session->userdata('vendor_type').'/'.$vendor_id.'/';
 		$config['allowed_types'] = 'pdf';
@@ -157,12 +173,12 @@ class Document extends CI_Controller {
 		$this->upload->initialize($config);
 
 		if (!$this->upload->do_upload('regulation')) {
-			$this->session->set_flashdata('reserr','No file is selected');
+			$this->session->set_flashdata('reserr','No File is selected');
 			redirect('Document/editdocumentbyid/'.$did);
 		}
 		else {
 			$upload_data = $this->upload->data();
-			$file_path = 'uploads/' .$this->session->userdata('vendor_type').'/'.$doc['vendor_id'].'/'. $upload_data['file_name'];		
+			$file_path = 'uploads/' .$this->session->userdata('vendor_type').'/'.$vendor_id.'/'. $upload_data['file_name'];		
 			
 			$data = array(
 				'regulation_name' => $_POST['regulation_name'],
@@ -173,7 +189,7 @@ class Document extends CI_Controller {
 				'file_path' => $file_path,
 				'file_name' => $upload_data['file_name']
 			);
-
+		
 		$res = $this->document_model->updatedocument($data,$did);
 		
 		if($res==1) {
@@ -192,6 +208,26 @@ class Document extends CI_Controller {
 	}
 }
 
+
+public function getdocumenthistorybyvendoranddocid($vendor_id,$regulation_id)
+{
+	if($this->session->userdata('vendor_type_id')!=null || $this->session->userdata('vendor_type_id')!='')
+	{
+		$data['docs'] = $this->regulation_history_model->gethistorybyvendorid($vendor_id,$regulation_id);
+		if($data!=null)
+		{
+			$this->load->view('fragments/vendor_header');
+			$this->load->view('viewdocumenthistory',$data);
+			$this->load->view('fragments/footer');
+		}
+		else {
+			$this->session->set_flashdata('reserr','No record found for Regulation ');
+			redirect('document/viewdocuments');
+		}
+	}
+	
+	
+}
 
 	public function getdocumentdates()
 	{
@@ -228,10 +264,6 @@ class Document extends CI_Controller {
 		}
 	}
 
-	public function upload()
-	{
-		echo "upload() called";
-		die();
-	}
+	
 }
 ?>

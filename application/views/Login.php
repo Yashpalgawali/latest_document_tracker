@@ -19,8 +19,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
-            <h4 class="card-title text-center mb-5 fw-light fs-5">Login</h4>
-			
+            <h4 class="card-title text-center mb-5 fs-5">Login</h4>
+			<hr>
 			<?php 
 				if($this->session->flashdata('response'))
 				{?> <div class="alert alert-success"><h6><?php echo $this->session->flashdata('response');?></h6></div>

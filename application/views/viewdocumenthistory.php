@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>View Documents</title>
+	<title>View Regulation History</title>
 	<link rel="stylesheet" href="<?php echo base_url();?>/assets/css/home.css">
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js" ></script>
@@ -13,12 +13,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- DataTable -->
 		<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-		<!-- <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-		<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script> -->
-
+	
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
-		<!-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" /> -->
-		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
 <script>
 	$(document).ready(function(){
@@ -80,16 +76,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<li class="breadcrumb-item active" aria-current="page">
 						<?php echo $this->session->userdata('vendor_type'); ?> 
 					</li>
-					<li class="breadcrumb-item active" aria-current="page">View Regulations </li>
+					<li class="breadcrumb-item active" aria-current="page">View Regulation History </li>
 				</ol>
 			</div>
 		</div>
 		<div class="card">
 			<div class="card-header">
 				<div>
-					<h4>View Regulation 
-						<a style ="float:right !important;" href="<?php echo base_url();?>Document" class="btn btn-primary">Add Regulation</a>
-					</h4>
+					<h4>View Regulation History </h4>
 				</div>
 			</div>
 			<div class="card-body">			
@@ -101,10 +95,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<th>Regulation Name </th>
 						<th>Regulation Description </th>
 						<th>Regulation Frequency </th>
-						<th>Validity From Date</th>
-						<th>Validity To Date</th>
+						<th>Inserted Date</th>
 						<th>Uploaded File </th>
-						<th>Action</th>
+						<th>Operation Date </th>
+						<th>Operation Time </th>
+						<?php if($this->session->userdata('vendor_type_id')==1)
+							{?><th>Action</th>
+						<?php } ?>	
 					</tr>
 				</thead>
 				<tbody>
@@ -128,33 +125,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											}
 										 ?>
 									</td>
-									<td><?php echo $doc['regulation_issued_date'];?></td>	
-									<td>
-										<?php 
-										if($doc['regulation_frequency']==1) {
-											$date = $doc['regulation_issued_date'];
-											$newDate = date('Y-m-d', strtotime($date. ' + 1 months'));
-											echo $newDate;
-										}
-										if($doc['regulation_frequency']==2) {
-											$date = $doc['regulation_issued_date'];
-											$newDate = date('Y-m-d', strtotime($date. ' + 3 months'));
-											echo $newDate;
-										}
-										if($doc['regulation_frequency']==3) {
-											$date = $doc['regulation_issued_date'];
-											$newDate = date('Y-m-d', strtotime($date. ' + 12 months'));
-											echo $newDate;
-										}
-										?>
-									</td>
-								
+									<td><?php 	$date = date_create($doc['regulation_issued_date']);
+										echo date_format($date,"d-m-Y");?></td>	
 									<td><a href="<?php echo base_url(''. $doc['file_path']);?>" target='_blank'><?php echo $doc['file_name']; ?></a></td>
 									<td>
-									<a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> 
-									<a href="<?php echo base_url('/document/getdocumenthistorybyvendoranddocid/'.$doc['vendor_id'].'/'.$doc['regulation_id']); ?>"><i class="fa fa-eye"></i>&nbsp;History</a> 
+										<?php 
+										$date = date_create($doc['operation_date']);
+										echo date_format($date,"d-m-Y");
+											//$date =  date('d-m-Y',$doc['operation_date']);
+											
+										?>
 									</td>
-										
+									<td><?php echo $doc['operation_time'];?></td>
+									<?php if($this->session->userdata('vendor_type_id')==1)
+									{?>
+									<td>
+										<a href="<?php echo base_url('/document/editdocumentbyid/'.$doc['regulation_id']); ?>"><i class="fa fa-edit"></i>&nbsp;Edit</a> 
+									</td>
+									<?php }?>
 									
 								</tr>
 							<?php
