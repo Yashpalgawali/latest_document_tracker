@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	<a href="<?php echo base_url();?>Vendor">Add Vendor</a>
 	<a href="<?php echo base_url();?>Vendor/addvendortype">Add Vendor Type</a>
-	<a href="<?php echo base_url();?>Vendor/viewvendortype">Add Vendor Type</a>
+	<a href="<?php echo base_url();?>Vendor/viewvendortype">View Vendor Type</a>
 
 </div>
 

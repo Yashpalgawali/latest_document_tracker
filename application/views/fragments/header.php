@@ -24,10 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Document</a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Regulation</a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link" href="<?php echo base_url();?>document">Add Document</a></li>
-            <li><a class="nav-link" href="<?php echo base_url();?>document/viewdocuments">View Document</a></li>
+            <li><a class="nav-link" href="<?php echo base_url();?>document">Add Regulation</a></li>
+            <li><a class="nav-link" href="<?php echo base_url();?>document/viewdocuments">View Regulation</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">

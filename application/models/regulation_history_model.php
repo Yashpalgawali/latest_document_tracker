@@ -5,8 +5,7 @@ class Regulation_history_model extends CI_Model {
         parent::__construct();
 	}
 
-	public function savehistory($data)
-	{
+	public function savehistory($data) {
 		return $this->db->insert('tbl_regulation_history',$data);
 	}
 

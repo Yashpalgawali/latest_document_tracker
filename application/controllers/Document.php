@@ -68,12 +68,13 @@ class Document extends CI_Controller {
 
 			if($res==1) {
 				$histdata = array(
-					'vendor_id' => $this->session->userdata('vendor_id'),
-					'regulation_id'=>$last_id,
-					'file_path' => $file_path,
-					'file_name' => $upload_data['file_name'],
-					'operation_date' => date('d-m-Y'),
-					'operation_time' => date('H:i:s')
+					'hist_vendor_id' => $this->session->userdata('vendor_id'),
+					'hist_regulation_name' => $_POST['regulation_name'],
+					'hist_regulation_id'=>$last_id,
+					'hist_file_path' => $file_path,
+					'hist_file_name' => $upload_data['file_name'],
+					'hist_operation_date' => date('d-m-Y'),
+					'hist_operation_time' => date('H:i:s')
 				);
 				$this->regulation_history_model->savehistory($histdata);
 				$activity = array(
@@ -194,12 +195,13 @@ class Document extends CI_Controller {
 		
 		if($res==1) {
 			$histdata = array(
-				'vendor_id' => $this->session->userdata('vendor_id'),
-				'regulation_id'=>$last_id,
-				'file_path' => $file_path,
-				'file_name' => $upload_data['file_name'],
-				'operation_date' => date('d-m-Y'),
-				'operation_time' => date('H:i:s')
+				'hist_vendor_id' => $this->session->userdata('vendor_id'),
+				'hist_regulation_name' => $_POST['regulation_name'],
+				'hist_regulation_id'=>$last_id,
+				'hist_file_path' => $file_path,
+				'hist_file_name' => $upload_data['file_name'],
+				'hist_operation_date' => date('d-m-Y'),
+				'hist_operation_time' => date('H:i:s')
 			);
 			$this->regulation_history_model->savehistory($histdata);
 			$activity = array(
