@@ -37,6 +37,12 @@ class Vendor_model extends CI_Model {
 		$this->db->where('vendor_id',$vid);
 		return $this->db->update('tbl_vendor',$data);
 	}
+
+	public function isvendorexists($email)
+	{
+	    return $this->db->select("*")->from("tbl_vendor")->where('vendor_email',$email)->get()->row_array();
+	}
+	
 }
 
 ?>

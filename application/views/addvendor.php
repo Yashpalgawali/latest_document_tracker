@@ -25,7 +25,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$("#password").focus();
 						alert('Passwords do not match');
 					}
-				})
+				});
+
+				var base_url = "<?php echo base_url();?>";
+				$("#vendor_email").focusout(function(e) {
+				    var email = $("#vendor_email").val();
+				  $.ajax({
+				     url : base_url+'Vendor/checkvendorexists/',
+				     type : "POST",
+				     dataType : 'JSON',
+				     data : {"email": email},
+				     success : function(data){
+				         alert(data)
+				     },
+				     error : function(err)
+				     {
+				         alert('error')
+				     }		
+				  });
+				});
 			});
 	</script>
 </head>
@@ -80,7 +98,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<option selected disabled>Please Select Vendor Type</option>
 						<?php foreach($vendortype as $vtype)
 						{
-							echo "<option value='".$vtype['vendor_type_id']."'>".$vtype['vendor_type']."</option>";
+							if($vtype['vendor_type_id']!=1)
+								echo "<option value='".$vtype['vendor_type_id']."'>".$vtype['vendor_type']."</option>";
 						}
 						?>
 						</select>

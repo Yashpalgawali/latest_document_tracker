@@ -203,4 +203,16 @@ class Vendor extends CI_Controller {
 			redirect('Vendor/viewvendortype');
 		}
 	}
+
+	public function checkvendorexists()
+	{
+		$email = $this->input->post('email');
+	    echo "Email is = ".$email;
+	    
+	    $res = $this->vendor_model->isvendorexists($email);
+		print_r($res);
+	  return  json_encode($res);
+	   
+	}
+
 }

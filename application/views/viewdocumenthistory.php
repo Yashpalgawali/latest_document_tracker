@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<tr>
 									<td> <?php echo $cnt++; ?> </td>
 									<td> <?php echo $doc['hist_regulation_name'];?> </td>
-									<td> <?php echo $doc['regulation_description'];?> </td>
+									<td> <?php echo $doc['hist_regulation_description'];?> </td>
 									<td> <?php 
 											if($doc['regulation_frequency']==1) {
 												echo "Monthly";

@@ -227,12 +227,10 @@ public function getdocumenthistorybyvendoranddocid($vendor_id,$regulation_id)
 		$data['docs'] = $this->regulation_history_model->gethistorybyvendorid($vendor_id,$regulation_id);
 		if($data!=null)
 		{
-			if($this->session->userdata('vendor_type_id')==1)
-			{
+			if($this->session->userdata('vendor_type_id')==1) {
 				$this->load->view('fragments/header');
 			}
-			if($this->session->userdata('vendor_type_id')== 2 || $this->session->userdata('vendor_type_id')== 3 )
-			{
+			if($this->session->userdata('vendor_type_id')== 2 || $this->session->userdata('vendor_type_id')== 3 ) {
 				$this->load->view('fragments/vendor_header');
 			}
 			$this->load->view('viewdocumenthistory',$data);
