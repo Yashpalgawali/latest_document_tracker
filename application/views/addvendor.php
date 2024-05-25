@@ -31,15 +31,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				$("#vendor_email").focusout(function(e) {
 				    var email = $("#vendor_email").val();
 				  $.ajax({
-				     url : base_url+'Vendor/checkvendorexists/',
+				     url  : base_url+'Vendor/checkvendorexists/',
 				     type : "POST",
 				     dataType : 'JSON',
-				     data : {"email": email},
+				     data : { "email": email },
 				     success : function(data){
 				         alert(data)
 				     },
-				     error : function(err)
-				     {
+				     error : function(err) {
 				         alert('error')
 				     }		
 				  });
